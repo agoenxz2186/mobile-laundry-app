@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:laundry_owner/models/auth_model.dart';
 import 'package:laundry_owner/providers/dashboard_provider.dart';
 import 'package:laundry_owner/providers/formlogin_providers.dart';
+import 'package:laundry_owner/providers/formoutlet_provider.dart';
+import 'package:laundry_owner/providers/listoutlet_provider.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/views/dashboard_view.dart';
 import 'package:laundry_owner/views/login_view.dart';
@@ -16,6 +18,8 @@ void main(List<String> args) {
       providers: [
         ChangeNotifierProvider(create: (c) => FormLoginProviders()),
         ChangeNotifierProvider(create: (c) => DashboardProvider()),
+        ChangeNotifierProvider(create: (c) => ListOutletProvider()),
+        ChangeNotifierProvider(create: (c) => FormOutletProvider()),
       ],
       builder: (context, w) {
         return MaterialApp(
@@ -23,6 +27,9 @@ void main(List<String> args) {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               textTheme: GoogleFonts.nunitoTextTheme(),
+              floatingActionButtonTheme: const FloatingActionButtonThemeData(
+                  backgroundColor: Color.fromARGB(255, 240, 100, 19),
+                  foregroundColor: Colors.white),
               inputDecorationTheme: InputDecorationTheme(
                   isDense: true,
                   contentPadding: const EdgeInsets.fromLTRB(15, 8, 15, 8),

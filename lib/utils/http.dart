@@ -9,7 +9,7 @@ class HTTP {
     return {
       'Content-Type': 'application/json',
       'Api-Token': '110b71af6c5c6c4982f716301dcaec29',
-      'Session-ID': Global.sessionID
+      'Session-ID': Global.auth?.sessionId ?? ''
     };
   }
 

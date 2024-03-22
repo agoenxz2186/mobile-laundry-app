@@ -44,11 +44,9 @@ class AuthModel {
         'full_name': fullName,
         'email': email,
         'phone': phone,
-        'date_birth': dateBirth,
+        'date_birth': "$dateBirth",
         'gender': gender,
         'role': role,
-        'created_at': createdAt?.toIso8601String(),
-        'updated_at': updatedAt,
         'type': type,
         'session_id': sessionId,
       };

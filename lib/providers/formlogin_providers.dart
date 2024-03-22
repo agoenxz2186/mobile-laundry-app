@@ -26,7 +26,7 @@ class FormLoginProviders with ChangeNotifier {
     notifyListeners();
 
     if (r['code'] == 200) {
-      Global.pref?.setString('user', jsonEncode( r['json']['data'] ) );
+      Global.pref?.setString('user', jsonEncode(r['json']['data']));
     }
     return r;
   }

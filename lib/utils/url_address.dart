@@ -6,7 +6,7 @@ class URLAddress {
   static const String customerBalances = '${baseURL}customer-balances';
   static const String orders = '${baseURL}orders';
   static const String detailOrders = '${baseURL}detail-orders';
-  static const String laundryOutlets = '${baseURL}laundry-oulets';
+  static const String laundryOutlets = '${baseURL}laundry-outlets';
   static const String paymentHistories = '${baseURL}payment-histories';
   static const String paymentMethods = '${baseURL}payment-methods';
   static const String productCategories = '${baseURL}product-categories';
