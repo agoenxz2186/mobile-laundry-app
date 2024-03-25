@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:laundry_owner/utils/url_address.dart';
+
 class LaundryOutletModel {
   int? id;
   String? name;
@@ -55,6 +57,10 @@ class LaundryOutletModel {
       owner: data['owner'] as String?,
       idx: data['idx'] as String?,
     );
+  }
+
+  String icon(){
+    return '${URLAddress.laundryOutlets}/icon/$idx.png';
   }
 
   Map<String, dynamic> toMap() => {

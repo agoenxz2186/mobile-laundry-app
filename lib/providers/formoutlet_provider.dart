@@ -10,4 +10,11 @@ class FormOutletProvider with ChangeNotifier {
   void init(LaundryOutletModel? model) {
     this.model = model ?? LaundryOutletModel();
   }
+
+  Future submit()async{
+    final v = formKey.currentState?.validate() ?? false;
+    if(v){
+        
+    }
+  }
 }

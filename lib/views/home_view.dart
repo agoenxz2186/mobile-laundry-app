@@ -13,7 +13,7 @@ class HomeView extends StatelessWidget {
         Container(
           width: double.infinity,
           height: 200,
-          color: Color.fromARGB(255, 240, 100, 19),
+          color: const Color.fromARGB(255, 240, 100, 19),
         ),
         SingleChildScrollView(
           child: Column(
@@ -52,10 +52,11 @@ class _MenuData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+      padding: EdgeInsets.all(5),
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(20)),
           color: Colors.white,
-          boxShadow: const [
+          boxShadow:  [
             BoxShadow(
                 blurRadius: 1,
                 spreadRadius: 0.7,
