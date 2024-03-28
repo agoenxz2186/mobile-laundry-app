@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart'; 
-import 'package:laundry_owner/components/widgets.dart';
-import 'package:laundry_owner/controllers/listoutlet_controller.dart';
-import 'package:laundry_owner/controllers/listproduk_controller.dart';
-import 'package:laundry_owner/models/laundry_outlet_model.dart';
+import 'package:laundry_owner/components/widgets.dart'; 
+import 'package:laundry_owner/controllers/listproduk_controller.dart'; 
 import 'package:laundry_owner/models/product_model.dart'; 
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart'; 
 import 'package:pull_to_refresh/pull_to_refresh.dart';

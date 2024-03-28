@@ -6,8 +6,7 @@ import 'package:flutter_material_design_icons/flutter_material_design_icons.dart
 import 'package:get/get.dart';
 import 'package:laundry_owner/components/map_choice_view.dart';
 import 'package:laundry_owner/controllers/formoutlet_controller.dart';
-import 'package:laundry_owner/models/laundry_outlet_model.dart';
-import 'package:laundry_owner/utils/global_variable.dart'; 
+import 'package:laundry_owner/models/laundry_outlet_model.dart'; 
 import 'package:string_validator/string_validator.dart' as validator;
 import 'package:latlong2/latlong.dart';
 
