@@ -3,17 +3,19 @@ import 'package:flutter_material_design_icons/flutter_material_design_icons.dart
 import 'package:get/get.dart'; 
 import 'package:laundry_owner/components/widgets.dart';
 import 'package:laundry_owner/controllers/listoutlet_controller.dart';
-import 'package:laundry_owner/models/laundry_outlet_model.dart'; 
+import 'package:laundry_owner/controllers/listproduk_controller.dart';
+import 'package:laundry_owner/models/laundry_outlet_model.dart';
+import 'package:laundry_owner/models/product_model.dart'; 
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart'; 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quickalert/quickalert.dart';
 
-class ListOutletView extends StatelessWidget {
-  const ListOutletView({super.key});
+class ListProdukView extends StatelessWidget {
+  const ListProdukView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ListOutletController());
+    final controller = Get.put(ListProdukController());
     controller.clearItemSelected();
 
     return  Scaffold(
@@ -77,8 +79,8 @@ class ListOutletView extends StatelessWidget {
                   if (controller.data.isEmpty)
                     const EmptyData()
                   else
-                    for (LaundryOutletModel v in controller.data) 
-                      _ItemListLaundryOutlet(v: v, controller: controller,)
+                    for (ProductModel v in controller.data) 
+                      _ItemListProduct(v: v, controller: controller,)
                 ],
               ),
             );
@@ -88,15 +90,15 @@ class ListOutletView extends StatelessWidget {
   }
 }
 
-class _ItemListLaundryOutlet extends StatelessWidget {
-  const _ItemListLaundryOutlet({
+class _ItemListProduct extends StatelessWidget {
+  const _ItemListProduct({
     super.key,
     required this.controller,
     required this.v,
   });
 
-  final LaundryOutletModel v;
-  final ListOutletController controller;
+  final ProductModel v;
+  final ListProdukController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -111,20 +113,15 @@ class _ItemListLaundryOutlet extends StatelessWidget {
           onTap: (){
               controller.onItemTap(v);
           },
-          leading: Image.network(
-            v.icon(),
-            errorBuilder: (context, error, stackTrace) {
-              return const Icon(MdiIcons.store, size: 38,color: Colors.grey,);
-            },
-          ),
+          
           title: Text('${v.name}', style: const TextStyle(fontSize: 18,
             fontWeight: FontWeight.bold
           ),),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${v.address}, ${v.city ?? ''} ${v.district ?? ''}'),
-              Text('${v.phone}')
+              Text('${v.name}'),
+              Text('${v.qty} ${v.qtyUnit}')
             ],
           ),
         );

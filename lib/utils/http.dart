@@ -43,6 +43,8 @@ class HTTP {
         .onError((error, stackTrace) {
       return http.Response('', 408);
     });
+    logD(url + ' : ' + jsonEncode(data));
+    
     return response(r);
   }
 

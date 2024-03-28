@@ -35,11 +35,17 @@ dependencies:
   file_picker: ^6.2.0
   flutter:
     sdk: flutter
+  flutter_map: ^6.1.0
+  flutter_map_dragmarker: ^6.0.0
   flutter_material_design_icons: ^1.1.7447
+  geocoding: ^3.0.0
+  geolocator: ^11.0.0
+  get: ^4.6.6
   google_fonts: ^6.2.1
   http: ^1.2.1
   image_picker: ^1.0.7
-  provider: ^6.1.2
+  page_route_animator: ^1.0.3
+  page_route_transition: ^3.1.2
   pull_to_refresh: ^2.0.0
   quickalert: ^1.1.0
   shared_preferences: ^2.2.2

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:laundry_owner/utils/url_address.dart';
+import 'package:latlong2/latlong.dart';
 
 class LaundryOutletModel {
   int? id;
@@ -63,8 +64,16 @@ class LaundryOutletModel {
     return '${URLAddress.laundryOutlets}/icon/$idx.png';
   }
 
+  LatLng? getPosition(){
+    if(pointLocation == null)return null;
+    if(pointLocation == '')return null;
+    final spl = pointLocation.toString().split(',');
+    if(spl.length < 2)return null;
+    return LatLng( double.tryParse( spl[0] ) ?? 0, double.tryParse( spl[1] ) ?? 0 );
+  }
+
   Map<String, dynamic> toMap() => {
-        'id': "$id",
+        'id': id,
         'name': name,
         'address': address,
         'point_location': pointLocation,

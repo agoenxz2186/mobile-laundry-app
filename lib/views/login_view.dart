@@ -1,11 +1,11 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laundry_owner/constants/assets.dart';
-import 'package:laundry_owner/painter/wave_painter.dart';
-import 'package:laundry_owner/providers/formlogin_providers.dart';
-import 'package:laundry_owner/views/dashboard_view.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:laundry_owner/constants/assets.dart'; 
+import 'package:laundry_owner/controllers/login_controller.dart';
+import 'package:laundry_owner/painter/wave_painter.dart'; 
+import 'package:laundry_owner/views/dashboard_view.dart'; 
 import 'package:string_validator/string_validator.dart' as validator;
 
 class LoginView extends StatelessWidget {
@@ -52,63 +52,68 @@ class _FormLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FormLoginProviders>(
-      builder: (bc, prov, w) => Form(
-        key: prov.keyForm,
-        child: Container(
-          margin: const EdgeInsets.fromLTRB(50, 20, 50, 20),
-          padding: const EdgeInsets.all(25),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                    blurRadius: 20,
-                    spreadRadius: 5,
-                    offset: Offset(2, 2),
-                    color: Colors.grey)
-              ]),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Email'),
-              TextFormField(
-                controller: prov.txtEmail,
-                enabled: !prov.loading,
-                validator: (value) => value?.isEmpty ?? true
-                    ? 'Email tidak boleh kosong'
-                    : (validator.isEmail(value ?? '')
-                        ? null
-                        : 'Gunakan alamat email yang benar'),
+    final controller = Get.put(LoginController());
+
+    return  Obx(
+        () {
+        return Form(
+            key: controller.keyForm,
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(50, 20, 50, 20),
+              padding: const EdgeInsets.all(25),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        blurRadius: 20,
+                        spreadRadius: 5,
+                        offset: Offset(2, 2),
+                        color: Colors.grey)
+                  ]),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Email'),
+                  TextFormField(
+                    controller: controller.txtEmail,
+                    enabled: !controller.loading.value,
+                    validator: (value) => value?.isEmpty ?? true
+                        ? 'Email tidak boleh kosong'
+                        : (validator.isEmail(value ?? '')
+                            ? null
+                            : 'Gunakan alamat email yang benar'),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text('Password'),
+                  TextFormField(
+                      controller: controller.txtPass,
+                      obscureText: true,
+                      enabled: !controller.loading.value,
+                      validator: (value) => value?.isEmpty ?? true
+                          ? 'Password tidak boleh kosong'
+                          : null),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: controller.loading.value
+                        ? const CupertinoActivityIndicator()
+                        : _buttonLogin(controller, context),
+                  )
+                ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text('Password'),
-              TextFormField(
-                  controller: prov.txtPass,
-                  obscureText: true,
-                  enabled: !prov.loading,
-                  validator: (value) => value?.isEmpty ?? true
-                      ? 'Password tidak boleh kosong'
-                      : null),
-              const SizedBox(
-                height: 20,
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: prov.loading
-                    ? const CupertinoActivityIndicator()
-                    : _buttonLogin(prov, context),
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
+           
+        );
+      }
     );
   }
 
-  ElevatedButton _buttonLogin(FormLoginProviders prov, BuildContext context) {
+  ElevatedButton _buttonLogin(LoginController prov, BuildContext context) {
     return ElevatedButton(
         onPressed: () {
           if (prov.keyForm.currentState?.validate() == false) {
