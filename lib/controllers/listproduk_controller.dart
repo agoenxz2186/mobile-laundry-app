@@ -53,7 +53,15 @@ class ListProdukController extends GetxController{
      return r != null;
   }
 
-  Future refresh() async {
+  Future newForm()async{
+      Get.to(()=>const FormProductView())?.then((value) {
+        if(value == true){
+          loadrefresh();
+        }
+      });
+  }
+
+  Future loadrefresh() async {
     _load(1);
     refreshController.refreshCompleted();
   }
@@ -70,8 +78,9 @@ class ListProdukController extends GetxController{
         Get.to(()=>FormProductView(model: v),
           transition: Transition.zoom
         )?.then((value) {
+          logD('hasil simpan $value');
             if(value == true){
-                refresh();
+                loadrefresh();
             }
         });
     }
@@ -89,7 +98,7 @@ class ListProdukController extends GetxController{
       });
       if(r['code'] == 200){
           clearItemSelected();
-          refresh();
+          loadrefresh();
       }
   }
 }

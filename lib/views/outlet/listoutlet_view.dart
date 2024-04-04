@@ -63,8 +63,7 @@ class ListOutletView extends StatelessWidget {
           },
           child: const Icon(MdiIcons.storeEdit),
         ),
-        body: Obx( () {
-            return SmartRefresher(
+        body: SmartRefresher(
               controller: controller.refreshController,
               onLoading: () {
                 controller.loadmore();
@@ -74,16 +73,19 @@ class ListOutletView extends StatelessWidget {
               },
               child: ListView(
                 children: [
-                  if (controller.data.isEmpty)
-                    const EmptyData()
-                  else
-                    for (LaundryOutletModel v in controller.data) 
-                      _ItemListLaundryOutlet(v: v, controller: controller,)
+                  Obx(()=>Column(
+                    children: [
+                       if (controller.data.isEmpty)
+                          const EmptyData()
+                      else
+                          for (LaundryOutletModel v in controller.data) 
+                            _ItemListLaundryOutlet(v: v, controller: controller,)
+                            
+                    ],
+                  ))
                 ],
               ),
-            );
-          }
-        ),
+            ) 
       ); 
   }
 }
@@ -100,8 +102,7 @@ class _ItemListLaundryOutlet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx( () {
-        return ListTile(
+    return ListTile(
            selected: controller.itemSelected[v.idx] == 1,
            selectedColor: Colors.green,
            onLongPress: () {
@@ -128,7 +129,6 @@ class _ItemListLaundryOutlet extends StatelessWidget {
             ],
           ),
         );
-      }
-    );
+     
   }
 }

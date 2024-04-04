@@ -24,3 +24,27 @@ class EmptyData extends StatelessWidget {
     );
   }
 }
+
+
+
+class LabelInfo extends StatelessWidget {
+  const LabelInfo({
+    super.key,
+    required this.label,
+  });
+
+  final Widget label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 38, 200, 250),
+        borderRadius: BorderRadius.circular(20)
+      ),
+      child: DefaultTextStyle(
+        style: const TextStyle(color: Colors.white),
+        child: label));
+  }
+}

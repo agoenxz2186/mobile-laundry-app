@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
+import 'package:get/get.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/views/outlet/listoutlet_view.dart';
+import 'package:laundry_owner/views/produk/listproduk_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -68,8 +70,7 @@ class _MenuData extends StatelessWidget {
         children: [
           _ItemMenuDashboard(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (c) => const ListOutletView()));
+               Get.to(()=>const ListOutletView());
             },
             icon: const Icon(
               MdiIcons.store,
@@ -79,7 +80,9 @@ class _MenuData extends StatelessWidget {
             title: 'Outlet',
           ),
           _ItemMenuDashboard(
-            onTap: () {},
+            onTap: () {
+              Get.to(()=>const ListProdukView());
+            },
             icon: Icon(
               MdiIcons.iron,
               size: 32,
@@ -170,7 +173,7 @@ class _ItemMenuDashboard extends StatelessWidget {
         splashColor: const Color.fromARGB(255, 247, 229, 215),
         child: Container(
           width: 66,
-          height: 66,
+          height: 75,
           margin: const EdgeInsets.all(8),
           child: Column(
             children: [

@@ -42,7 +42,7 @@ class ProductCategoryModel {
         'name': name,
         'description': description,
         'is_active': "$isActive",
-        'laundry_outlet_id': "$laundryOutletId",
+        'laundry_outlet_id': laundryOutletId,
         'user_id': "$userId",
         'laundry_outlet': laundryOutlet,
         'user': user,

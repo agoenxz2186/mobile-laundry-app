@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart'; 
@@ -7,6 +8,7 @@ import 'package:laundry_owner/models/product_model.dart';
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart'; 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:badges/badges.dart' as badges;
 
 class ListProdukView extends StatelessWidget {
   const ListProdukView({super.key});
@@ -21,7 +23,7 @@ class ListProdukView extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Outlet Laundry'),
+              const Text('Produk  / Jasa'),
               Obx( () {
                   return controller.modeSelected.value ? 
                        DefaultTextStyle(
@@ -36,8 +38,8 @@ class ListProdukView extends StatelessWidget {
             Obx(() => controller.modeSelected.value ? Row(children: [
               IconButton(onPressed: (){
                  QuickAlert.show(context: context, type: QuickAlertType.confirm,
-                  title: 'Hapus Outlet',
-                  text: '${controller.itemSelected.keys.length} data outlet akan dihapus, mau tetap dilanjutkan?',
+                  title: 'Hapus Produk',
+                  text: '${controller.itemSelected.keys.length} data produk akan dihapus, mau tetap dilanjutkan?',
                   onCancelBtnTap: (){
                       Get.close(0);
                   },
@@ -55,11 +57,7 @@ class ListProdukView extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(context,
-                    MaterialPageRoute(builder: (c) => const FormOutletView()))
-                .then((value) {
-              if (value == true) controller.refresh();
-            });
+              controller.newForm();
           },
           child: const Icon(MdiIcons.storeEdit),
         ),
@@ -70,7 +68,7 @@ class ListProdukView extends StatelessWidget {
                 controller.loadmore();
               },
               onRefresh: () {
-                controller.refresh();
+                controller.loadrefresh();
               },
               child: ListView(
                 children: [
@@ -100,8 +98,7 @@ class _ItemListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx( () {
-        return ListTile(
+    return ListTile(
            selected: controller.itemSelected[v.idx] == 1,
            selectedColor: Colors.green,
            onLongPress: () {
@@ -115,15 +112,15 @@ class _ItemListProduct extends StatelessWidget {
           title: Text('${v.name}', style: const TextStyle(fontSize: 18,
             fontWeight: FontWeight.bold
           ),),
+          trailing: Text('${v.rating ?? 0}'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${v.name}'),
-              Text('${v.qty} ${v.qtyUnit}')
+              Text(v.category ?? "[Kategori belum di set]"),
+              Text('${v.salePrice ?? 0} '),
+              LabelInfo(label: Text('Layanan ${v.duration} ${v.durationUnit}'),)
             ],
           ),
-        );
-      }
-    );
+        ); 
   }
 }

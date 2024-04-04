@@ -1,16 +1,19 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 class ProductModel {
   int? id;
   String? name;
   String? description;
+  String? category;
   int? productCategoryId;
-  int? dppPrice;
-  int? salePrice;
-  String? rating;
-  String? duration;
+  double? dppPrice;
+  double? salePrice;
+  double? rating;
+  double? duration;
   String? durationUnit;
-  String? minimumQty;
+  double? minimumQty;
+  String? outletLaundry;
   dynamic qty;
   dynamic qtyUnit;
   int? laundryOutletId;
@@ -21,6 +24,7 @@ class ProductModel {
     this.id,
     this.name,
     this.description,
+    this.category,
     this.productCategoryId,
     this.dppPrice,
     this.salePrice,
@@ -28,6 +32,7 @@ class ProductModel {
     this.duration,
     this.durationUnit,
     this.minimumQty,
+    this.outletLaundry,
     this.qty,
     this.qtyUnit,
     this.laundryOutletId,
@@ -39,35 +44,38 @@ class ProductModel {
         id: data['id'] as int?,
         name: data['name'] as String?,
         description: data['description'] as String?,
+        category: data['category'] as String?,
         productCategoryId: data['product_category_id'] as int?,
-        dppPrice: data['dpp_price'] as int?,
-        salePrice: data['sale_price'] as int?,
-        rating: data['rating'] as String?,
-        duration: data['duration'] as String?,
+        dppPrice: double.tryParse('${data['dpp_price']}'),
+        salePrice: double.tryParse('${data['sale_price']}'), 
+        rating: double.tryParse('${data['rating']}'),
+        duration: double.tryParse('${data['duration']}') ?? 0,
         durationUnit: data['duration_unit'] as String?,
-        minimumQty: data['minimum_qty'] as String?,
+        minimumQty: double.tryParse('${data['minimum_qty']}'),
         qty: data['qty'] as dynamic,
         qtyUnit: data['qty_unit'] as dynamic,
         laundryOutletId: data['laundry_outlet_id'] as int?,
         creatorUserId: data['creator_user_id'] as int?,
+        outletLaundry: data['outlet_laundry'],
         idx: data['idx'] as String?,
       );
 
   Map<String, dynamic> toMap() => {
-        'id': "$id",
+        'id': id,
         'name': "$name",
         'description': "$description",
-        'product_category_id': "$productCategoryId",
-        'dpp_price': "$dppPrice",
-        'sale_price': "$salePrice",
-        'rating': "$rating",
-        'duration': "$duration",
-        'duration_unit': "$durationUnit",
-        'minimum_qty': "$minimumQty",
-        'qty': "$qty",
-        'qty_unit': "$qtyUnit",
-        'laundry_outlet_id': "$laundryOutletId",
-        'creator_user_id': "$creatorUserId",
+        'product_category_id': productCategoryId,
+        'dpp_price': dppPrice ?? 0,
+        'sale_price': salePrice ?? 0,
+        'rating': rating ?? 0, 
+        'duration': duration ?? 0,
+        'duration_unit': durationUnit ?? 'jam',
+        'minimum_qty': minimumQty ?? 0,
+        'outlet_laundry': outletLaundry,
+        'qty': qty ?? 0,
+        'qty_unit': qtyUnit ?? 'pcs',
+        'laundry_outlet_id': laundryOutletId,
+        'creator_user_id': creatorUserId,
         'idx': "$idx",
       };
 
