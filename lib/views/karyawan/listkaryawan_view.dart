@@ -6,7 +6,8 @@ import 'package:laundry_owner/components/widgets.dart';
 import 'package:laundry_owner/controllers/listkaryawan_controller.dart';
 import 'package:laundry_owner/controllers/listoutlet_controller.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
-import 'package:laundry_owner/models/user_model.dart'; 
+import 'package:laundry_owner/models/user_model.dart';
+import 'package:laundry_owner/views/karyawan/formkaryawan_view.dart'; 
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart'; 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quickalert/quickalert.dart';
@@ -24,7 +25,7 @@ class ListKaryawanView extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Karyawan'),
+              const Text('Daftar Karyawan'),
               Obx( () {
                   return controller.modeSelected.value ? 
                        DefaultTextStyle(
@@ -59,38 +60,42 @@ class ListKaryawanView extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-                    MaterialPageRoute(builder: (c) => const FormOutletView()))
+                    MaterialPageRoute(builder: (c) => const FormKaryawanView()))
                 .then((value) {
               if (value == true) controller.loadRefresh();
             });
           },
           child: const Icon(MdiIcons.storeEdit),
         ),
-        body: SmartRefresher(
-              controller: controller.refreshController,
-              onLoading: () {
-                controller.loadMore();
-              },
-              onRefresh: () {
-                controller.loadRefresh();
-              },
-              child: ListView(
-                children: [
-                  Obx(()=>Column(
+        body: Obx( () {
+            return SmartRefresher(
+                  controller: controller.refreshController,
+                  onLoading: () {
+                    controller.loadMore();
+                  },
+                  onRefresh: () {
+                    controller.loadRefresh();
+                  },
+                  child: ListView(
                     children: [
-                       if (controller.data.isEmpty)
-                          const EmptyData()
-                      else if(controller.isLoading.value == true)
-                        const CupertinoActivityIndicator()
-                      else
-                          for (UserModel v in controller.data) 
-                            _itemListTile(v: v, controller: controller,)
-                            
+                      Column(
+                        children: [
+                          if(controller.isLoading.value == true)
+                            const CupertinoActivityIndicator(),
+
+                           if (controller.data.isEmpty)
+                              const EmptyData()
+                          else
+                              for (UserModel v in controller.data) 
+                                _itemListTile(v: v, controller: controller,)
+                                
+                        ],
+                      )
                     ],
-                  ))
-                ],
-              ),
-            ) 
+                  ),
+                );
+          }
+        ) 
       ); 
   }
 }
@@ -123,7 +128,7 @@ class _itemListTile extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${v.gender ?? '-'}, ${v.role ?? ''}'),
+              Text('${v.gender ?? '-'}, ${v.roleAlias()}'),
               Text('${v.phone}')
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:laundry_owner/models/user_model.dart'; 
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/views/dashboard_view.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
+  initializeDateFormatting('id_ID');
 
   runApp( GetMaterialApp(
             title: 'L-dry Owner',

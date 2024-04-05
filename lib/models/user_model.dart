@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class UserModel {
   int? id;
   String? idx;
@@ -50,7 +52,7 @@ class UserModel {
         'full_name': fullName,
         'email': email,
         'phone': phone,
-        'date_birth': "$dateBirth",
+        'date_birth': dateBirth,
         'gender': gender,
         'role': role,
         'type': type,
@@ -70,6 +72,28 @@ class UserModel {
   ///
   /// Converts [AuthModel] to a JSON string.
   String toJson() => json.encode(toMap());
+
+  String roleAlias(){
+      final c = {'SU' : 'Super Admin', 'ADM':'Administrator', 'OLN':'Owner', 
+        'KLN' : 'Karyawan'
+      };
+      return c[role] ?? (role ?? '');
+  }
+
+  String formatDateBirth(){
+     try{
+        final f = DateFormat('yyyy-MM-dd').parse(dateBirth);
+        return DateFormat('EEE, dd MMM yyyy', 'id_ID').format(f);
+     }catch(e){}
+     return '';
+  }
+
+  DateTime tgllahir(){
+    try{
+      return DateFormat('yyyy-MM-dd').parse(dateBirth);
+    }catch(e){}
+    return DateTime.now();
+  }
 
   UserModel copyWith({
     String? fullName,
@@ -100,4 +124,6 @@ class UserModel {
       idx: idx ?? this.idx,
     );
   }
+
+  
 }

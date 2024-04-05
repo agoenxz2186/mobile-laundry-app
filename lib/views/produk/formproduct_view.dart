@@ -25,7 +25,7 @@ class FormProductView extends StatelessWidget {
     final controller = Get.put(FormProductController());
     controller.initModel(model);
 
-    return Scaffold(
+  return Scaffold(
       appBar: AppBar(
         title: const Text('Produk / Jasa'),
         actions: [
