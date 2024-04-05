@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-class AuthModel {
+class UserModel {
+  int? id;
+  String? idx;
   String? fullName;
   String? email;
   String? phone;
@@ -12,7 +14,9 @@ class AuthModel {
   String? type;
   String? sessionId;
 
-  AuthModel({
+  UserModel({
+    this.id,
+    this.idx,
     this.fullName,
     this.email,
     this.phone,
@@ -25,7 +29,7 @@ class AuthModel {
     this.sessionId,
   });
 
-  factory AuthModel.fromMap(Map<String, dynamic> data) => AuthModel(
+  factory UserModel.fromMap(Map<String, dynamic> data) => UserModel(
         fullName: data['full_name'] as String?,
         email: data['email'] as String?,
         phone: data['phone'] as String?,
@@ -38,6 +42,8 @@ class AuthModel {
         updatedAt: data['updated_at'] as dynamic,
         type: data['type'] as String?,
         sessionId: data['session_id'] as String?,
+        id: data['id'],
+        idx: data['idx'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -49,13 +55,15 @@ class AuthModel {
         'role': role,
         'type': type,
         'session_id': sessionId,
+        'id': id,
+        'idx': idx,
       };
 
   /// `dart:convert`
   ///
-  /// Parses the string and returns the resulting Json object as [AuthModel].
-  factory AuthModel.fromJson(String data) {
-    return AuthModel.fromMap(json.decode(data) as Map<String, dynamic>);
+  /// Parses the string and returns the resulting Json object as [UserModel].
+  factory UserModel.fromJson(String data) {
+    return UserModel.fromMap(json.decode(data) as Map<String, dynamic>);
   }
 
   /// `dart:convert`
@@ -63,7 +71,7 @@ class AuthModel {
   /// Converts [AuthModel] to a JSON string.
   String toJson() => json.encode(toMap());
 
-  AuthModel copyWith({
+  UserModel copyWith({
     String? fullName,
     String? email,
     String? phone,
@@ -74,8 +82,10 @@ class AuthModel {
     dynamic updatedAt,
     String? type,
     String? sessionId,
+    int? id,
+    String? idx,
   }) {
-    return AuthModel(
+    return UserModel(
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       phone: phone ?? this.phone,
@@ -86,6 +96,8 @@ class AuthModel {
       updatedAt: updatedAt ?? this.updatedAt,
       type: type ?? this.type,
       sessionId: sessionId ?? this.sessionId,
+      id: id ?? this.id,
+      idx: idx ?? this.idx,
     );
   }
 }

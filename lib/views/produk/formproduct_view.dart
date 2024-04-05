@@ -3,13 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/components/select_view.dart';
+import 'package:laundry_owner/controllers/formcategoryproduct_controller.dart';
 import 'package:laundry_owner/controllers/formproduct_controller.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/models/product_category_model.dart';
-import 'package:laundry_owner/models/product_model.dart'; 
+import 'package:laundry_owner/models/product_model.dart';
+import 'package:laundry_owner/utils/global_variable.dart'; 
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:laundry_owner/views/categoryproduct/formcategoryproduct_view.dart';
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 class FormProductView extends StatelessWidget {
   final ProductModel? model;
@@ -44,9 +47,14 @@ class FormProductView extends StatelessWidget {
                       title: 'Pilih Outlet',
                       label: const Text('Outlet'),
                       url: URLAddress.laundryOutlets,
+                      validator: (value) {
+                          return (controller.model.laundryOutletId ?? 0) <= 0 ? 'Outlet harus diisikan' : null;
+                      },
                       controller: controller.OutletController,
-                      onAddNewTap: (){
-                          Get.to(()=>const FormOutletView());
+                      onAddNewTap: (controller){
+                          Get.to(()=>const FormOutletView())?.then((value) {
+                              controller.loadRefresh();
+                          });
                       },
                       onChanged: (value) { 
                           controller.setOutletLaundry( LaundryOutletModel.fromMap(value) );
@@ -57,6 +65,28 @@ class FormProductView extends StatelessWidget {
                       },
                     ),
                 
+                     Row(
+                    children: [
+                      
+                      const Expanded(flex: 2,child: Text('Produk Aktif'),),
+                      Expanded(
+                        child: Obx( ( ) {
+                            return controller.isLoading.value ? const CupertinoActivityIndicator() : 
+                            Transform.scale(
+                              scale: .6,
+                              child: LiteRollingSwitch(onTap: (){}, onDoubleTap: (){}, onSwipe: (){},
+                                value: controller.model.isAvailable ?? false, 
+                                width: 80,
+                                onChanged: (p0) {
+                                    controller.setActive(p0);
+                              }),
+                            );
+                          }
+                        ),
+                      )
+                    ],
+                  ),
+                  
                     const SizedBox(height: 10,),
                 
                     inputField('Nama Produk', TextFormField(
@@ -82,8 +112,11 @@ class FormProductView extends StatelessWidget {
                       label: const Text('Kategori Produk'),
                       url: URLAddress.productCategories,
                       controller: controller.KategoriController,
-                      onAddNewTap: (){
-                          Get.to(()=>const FormCategoryProductView());
+                      onAddNewTap: (controller){
+                          Get.to(()=>const FormCategoryProductView())?.then((value) {
+                               logD('Telah selesai pilih kategori');
+                               controller.loadRefresh();
+                          });
                       },
                       onChanged: (value) { 
                           controller.setCategory( ProductCategoryModel.fromMap(value) );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
+import 'package:laundry_owner/views/karyawan/listkaryawan_view.dart';
 import 'package:laundry_owner/views/outlet/listoutlet_view.dart';
 import 'package:laundry_owner/views/produk/listproduk_view.dart';
 
@@ -83,14 +84,16 @@ class _MenuData extends StatelessWidget {
             onTap: () {
               Get.to(()=>const ListProdukView());
             },
-            icon: Icon(
+            icon: const Icon(
               MdiIcons.iron,
               size: 32,
             ),
             title: 'Produk / Jasa',
           ),
           _ItemMenuDashboard(
-            onTap: () {},
+            onTap: () {
+              Get.to(()=>const ListKaryawanView());
+            },
             icon: const Icon(
               MdiIcons.cardAccountDetails,
               size: 32,

@@ -27,9 +27,9 @@ class FormProductController extends GetxController{
         
             if(value['code'] == 200){
               final p = ProductModel.fromMap(value['json']['data']);
-              model = p;
-                logD("isi get : ${model.dppPrice}");
-                model.laundryOutletId = p.laundryOutletId;
+              model = p; 
+              model.idx = m?.idx;
+              model.laundryOutletId = p.laundryOutletId;
               OutletController.text = p.outletLaundry ?? '';
             } 
             
@@ -40,6 +40,11 @@ class FormProductController extends GetxController{
          });
     }
 
+    void setActive(bool v){
+        isLoading.value = true;
+        model.isAvailable = v;
+        isLoading.value = false;
+    }
     Future submit()async{
       if(formKey.currentState?.validate() ?? false){
         isLoading.value = true;

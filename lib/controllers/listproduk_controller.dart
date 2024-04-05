@@ -1,4 +1,6 @@
 
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/models/product_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
@@ -39,12 +41,14 @@ class ListProdukController extends GetxController{
   }
 
   void addItemSelected(String? id){
+    isLoading.value = true;
       final r = itemSelected[id];
       if(r == null){
           itemSelected[id] = 1;
       }else{
           itemSelected.remove(id);  
       }
+    isLoading.value = false;  
   }
 
   bool isItemSelected(ProductModel v){
@@ -93,12 +97,19 @@ class ListProdukController extends GetxController{
 
   Future hapusData()async{
       Get.close(0);
-      final r = await HTTP.delete(URLAddress.laundryOutlets, data:{
+      final r = await HTTP.delete(URLAddress.products, data:{
         'id': itemSelected.keys.toList()
       });
+      logD(r);
+
       if(r['code'] == 200){
           clearItemSelected();
           loadrefresh();
+      }else{
+         CherryToast.error(
+          title: const Text('Hapus'),
+          description: const Text('Gagal hapus data produk'),
+         ).show(Get.context!);
       }
   }
 }

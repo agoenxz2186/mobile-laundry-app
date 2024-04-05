@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:laundry_owner/models/auth_model.dart';
+import 'package:laundry_owner/models/user_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
@@ -30,7 +30,7 @@ class LoginController extends GetxController{
       
       final user = Global.pref?.getString('user') ?? '';
     // logD("isi user $user");
-      Global.auth = AuthModel.fromJson(user);
+      Global.auth = UserModel.fromJson(user);
     }
     return r;
   }

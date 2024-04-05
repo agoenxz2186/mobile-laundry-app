@@ -40,20 +40,6 @@ class ListOutletController extends GetxController{
      
   }
 
-  void addItemSelected(String? id){
-      final r = itemSelected[id];
-      if(r == null){
-          itemSelected[id] = 1;
-      }else{
-          itemSelected.remove(id);  
-      }
-  }
-
-  bool isItemSelected(LaundryOutletModel v){
-     final r = itemSelected[v.id];
-     logD("isitem selected = $r");
-     return r != null;
-  }
 
   Future refresh() async {
     _load(1);
@@ -79,6 +65,20 @@ class ListOutletController extends GetxController{
     }
   }
 
+  void addItemSelected(String? id){
+      final r = itemSelected[id];
+      if(r == null){
+          itemSelected[id] = 1;
+      }else{
+          itemSelected.remove(id);  
+      }
+  }
+
+  bool isItemSelected(LaundryOutletModel v){
+     final r = itemSelected[v.id];
+     logD("isitem selected = $r");
+     return r != null;
+  }
   void clearItemSelected(){
       modeSelected.value =false;
       itemSelected.clear();

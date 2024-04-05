@@ -2,6 +2,7 @@ import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/components/select_view.dart';
 import 'package:laundry_owner/controllers/formcategoryproduct_controller.dart';
@@ -36,21 +37,11 @@ class FormCategoryProductView extends StatelessWidget {
       appBar: AppBar(
         title:const Text('Kategori Produk'),
         actions: [
-            Obx(() => controller.isLoading.value == true ? const CupertinoActivityIndicator() : 
-              IconButton(onPressed: (){
-                  controller.submit().then((value) {
-                      if(value == null)return;
-
-                      if(value['code'] == 200){
-                          Get.back();
-                      }else{
-                         CherryToast.error(title: const Text('Kategori Produk'),
-                            description: Text('${value['json']['message'] ?? 'Gagal simpan data'}'),
-                         ).show(context);
-                      }
-                  });
-              }, icon: const Icon(Icons.save))
-            )
+          Obx(() => controller.isLoading.value == true ? 
+                    const CupertinoActivityIndicator() : 
+                      IconButton(onPressed: ()=> controller.submit(), 
+                        icon: const Icon(MdiIcons.contentSave),))
+          
         ],
       ),
       body: SingleChildScrollView(

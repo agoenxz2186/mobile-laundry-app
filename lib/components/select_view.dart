@@ -8,6 +8,7 @@ import 'package:laundry_owner/utils/http.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 typedef OnItemRender = Widget Function(dynamic n);
+typedef OnAddNewTap = Function(dynamic n);
 
 class SelectField extends StatelessWidget {
   const SelectField({super.key, this.controller, 
@@ -23,7 +24,7 @@ class SelectField extends StatelessWidget {
   final FormFieldValidator? validator;
   final String? title;
   final String? url;
-  final VoidCallback? onAddNewTap;
+  final OnAddNewTap? onAddNewTap;
   final OnItemRender? onItemRender;
   final TextEditingController? controller;
   final ValueChanged? onChanged;
@@ -72,7 +73,7 @@ class SelectView extends StatelessWidget {
     this.title = 'Pilih Referensi', this.onItemRender, this.url,
     this.onAddNewTap  
   });
-  final VoidCallback? onAddNewTap;
+  final OnAddNewTap? onAddNewTap;
   final String title;
   final String? url;
   final OnItemRender? onItemRender;
@@ -82,65 +83,73 @@ class SelectView extends StatelessWidget {
     final controller = Get.put(_SelectController());
     controller.init(url);
 
-    return Scaffold(
-      floatingActionButton: onAddNewTap == null ? null : 
-        FloatingActionButton(onPressed: (){
-            onAddNewTap!();
-        }, 
-      tooltip: 'Tambah data', child: const Icon(MdiIcons.plus),),
-      appBar: AppBar(title: Obx( () {
-          return controller.isSearchMode.value == true ? CupertinoSearchTextField(
-            style: const TextStyle(color: Colors.white),
-            placeholderStyle: const TextStyle(color: Color.fromARGB(255, 204, 187, 167)),
-            placeholder: 'Pencarian...',
-            onSubmitted: (value) {
-                controller.keyword = value;
-                controller.loadRefresh();
-            },
-
-          ) : Text(title);
-        }
+    return PopScope(
+      onPopInvoked: (didPop) {
+           
+          if( didPop ){
+             controller.pop();
+          }
+      },
+      child: Scaffold(
+        floatingActionButton: onAddNewTap == null ? null : 
+          FloatingActionButton(onPressed: (){
+              onAddNewTap!(controller);
+          }, 
+        tooltip: 'Tambah data', child: const Icon(MdiIcons.plus),),
+        appBar: AppBar(title: Obx( () {
+            return controller.isSearchMode.value == true ? CupertinoSearchTextField(
+              style: const TextStyle(color: Colors.white),
+              placeholderStyle: const TextStyle(color: Color.fromARGB(255, 204, 187, 167)),
+              placeholder: 'Pencarian...',
+              onSubmitted: (value) {
+                  controller.keyword = value;
+                  controller.loadRefresh();
+              },
+      
+            ) : Text(title);
+          }
+        ),
+          actions: [
+              Obx(() => controller.isSearchMode.value == true ? IconButton(onPressed: (){
+                 controller.isSearchMode.value = false; 
+                 controller.keyword = '';            
+              }, icon: const Icon(Icons.close)) : IconButton(onPressed: (){
+                  controller.isSearchMode.value = true;
+              }, icon: const Icon(Icons.search)) )
+          ],
+        ),
+        body:  SmartRefresher(
+              controller: controller.refreshController,
+              onRefresh: () {
+                  controller.loadRefresh();
+              },
+              onLoading: () {
+                  controller.loadMore();
+              },
+              child: ListView(children: [
+      
+                Obx( () => Column(
+                  children: [
+                      if(controller.data.isEmpty)
+                        const EmptyData(
+                          pesan: 'Belum ada data tersedia',
+                        )
+                      else
+                        for(var n in controller.data)
+                          if(onItemRender == null) 
+                            const SizedBox()
+                          else
+                            InkWell(
+                              onTap: (){
+                                Get.back(result: n);
+                              },
+                              child: onItemRender!(n))
+                  ],
+                ))
+                  
+              ],),
+            )
       ),
-        actions: [
-            Obx(() => controller.isSearchMode.value == true ? IconButton(onPressed: (){
-               controller.isSearchMode.value = false; 
-               controller.keyword = '';            
-            }, icon: const Icon(Icons.close)) : IconButton(onPressed: (){
-                controller.isSearchMode.value = true;
-            }, icon: const Icon(Icons.search)) )
-        ],
-      ),
-      body:  SmartRefresher(
-            controller: controller.refreshController,
-            onRefresh: () {
-                controller.loadRefresh();
-            },
-            onLoading: () {
-                controller.loadMore();
-            },
-            child: ListView(children: [
-
-              Obx( () => Column(
-                children: [
-                    if(controller.data.isEmpty)
-                      const EmptyData(
-                        pesan: 'Belum ada data tersedia',
-                      )
-                    else
-                      for(var n in controller.data)
-                        if(onItemRender == null) 
-                          const SizedBox()
-                        else
-                          InkWell(
-                            onTap: (){
-                              Get.back(result: n);
-                            },
-                            child: onItemRender!(n))
-                ],
-              ))
-                
-            ],),
-          )
     );
   }
 }
@@ -153,15 +162,22 @@ class _SelectController extends GetxController{
    String keyword = '';
    RxBool isLoading = false.obs;
    RxBool isSearchMode = false.obs;
+   List _listURL = []; 
 
    void init(String? url){
-      _url = url;
+      _listURL.add(url);
+      _url = _listURL[ _listURL.length - 1 ];
       refreshController = RefreshController(initialRefresh: true);
-  
+      logD("isi url : ${_listURL}");
+   }
+
+   void pop(){
+      _listURL.removeLast();
    }
 
    Future loadRefresh()async{
       _page = 1;
+      _url = _listURL[ _listURL.length - 1 ];
       final uri = _url ?? '';
       isLoading.value = true;
       final r = await HTTP.get('$uri?page=$_page&keyword=$keyword');
@@ -180,6 +196,7 @@ class _SelectController extends GetxController{
    }
 
    Future loadMore()async{
+      _url = _listURL[ _listURL.length - 1 ];
       final uri = _url ?? '';
       _page++;
       isLoading.value = true;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:laundry_owner/models/auth_model.dart'; 
+import 'package:laundry_owner/models/user_model.dart'; 
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/views/dashboard_view.dart';
 import 'package:laundry_owner/views/login_view.dart'; 
@@ -45,7 +45,7 @@ class Appku extends StatelessWidget {
     Global.pref = await SharedPreferences.getInstance();
     final user = Global.pref?.getString('user') ?? '';
     // logD("isi user $user");
-    Global.auth = AuthModel.fromJson(user);
+    Global.auth = UserModel.fromJson(user);
     return Global.auth?.sessionId?.isNotEmpty ?? false;
   }
 

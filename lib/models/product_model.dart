@@ -19,6 +19,7 @@ class ProductModel {
   int? laundryOutletId;
   int? creatorUserId;
   String? idx;
+  bool? isAvailable;
 
   ProductModel({
     this.id,
@@ -38,6 +39,7 @@ class ProductModel {
     this.laundryOutletId,
     this.creatorUserId,
     this.idx,
+    this.isAvailable,
   });
 
   factory ProductModel.fromMap(Map<String, dynamic> data) => ProductModel(
@@ -58,6 +60,7 @@ class ProductModel {
         creatorUserId: data['creator_user_id'] as int?,
         outletLaundry: data['outlet_laundry'],
         idx: data['idx'] as String?,
+        isAvailable:bool.tryParse( '${data['is_available']}' ) ?? false,
       );
 
   Map<String, dynamic> toMap() => {
@@ -77,6 +80,7 @@ class ProductModel {
         'laundry_outlet_id': laundryOutletId,
         'creator_user_id': creatorUserId,
         'idx': "$idx",
+        'is_available': isAvailable,
       };
 
   /// `dart:convert`

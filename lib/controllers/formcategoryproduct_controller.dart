@@ -1,4 +1,5 @@
 
+import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
@@ -30,8 +31,15 @@ class FormCategoryProductController extends GetxController{
         isLoading.value = true;
         final r = await HTTP.post(URLAddress.productCategories, data: model.toMap());
         isLoading.value = false;
-        logD(r);
-        return r;
+        
+        if(r['code'] == 200){
+            Get.back(result: true);
+        }else{
+            CherryToast.error(title: const Text('Kategori Produk'),
+              description: Text('${r['json']['message'] ?? 'Gagal simpan data'}'),
+            ).show(Get.context!);
+        }
+        
       }else{
         return null;
       }
