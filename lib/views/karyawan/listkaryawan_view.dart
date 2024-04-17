@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart'; 
 import 'package:laundry_owner/components/widgets.dart';
-import 'package:laundry_owner/controllers/listkaryawan_controller.dart';
-import 'package:laundry_owner/controllers/listoutlet_controller.dart';
-import 'package:laundry_owner/models/laundry_outlet_model.dart';
+import 'package:laundry_owner/controllers/listkaryawan_controller.dart'; 
 import 'package:laundry_owner/models/user_model.dart';
-import 'package:laundry_owner/views/karyawan/formkaryawan_view.dart'; 
-import 'package:laundry_owner/views/outlet/formoutlet_view.dart'; 
+import 'package:laundry_owner/utils/global_variable.dart';
+import 'package:laundry_owner/views/karyawan/formkaryawan_view.dart';  
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -18,7 +16,6 @@ class ListKaryawanView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ListKaryawanController());
-    controller.loadMore();
 
     return  Scaffold(
         appBar: AppBar(
@@ -40,8 +37,8 @@ class ListKaryawanView extends StatelessWidget {
             Obx(() => controller.modeSelected.value ? Row(children: [
               IconButton(onPressed: (){
                  QuickAlert.show(context: context, type: QuickAlertType.confirm,
-                  title: 'Hapus Outlet',
-                  text: '${controller.itemSelected.keys.length} data outlet akan dihapus, mau tetap dilanjutkan?',
+                  title: 'Hapus Karyawan',
+                  text: '${controller.itemSelected.keys.length} data Karyawan akan dihapus, mau tetap dilanjutkan?',
                   onCancelBtnTap: (){
                       Get.close(0);
                   },
@@ -68,6 +65,7 @@ class ListKaryawanView extends StatelessWidget {
           child: const Icon(MdiIcons.storeEdit),
         ),
         body: Obx( () {
+            logD(controller.data);
             return SmartRefresher(
                   controller: controller.refreshController,
                   onLoading: () {

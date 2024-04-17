@@ -29,6 +29,7 @@ class HTTP {
         .get(Uri.parse(url), headers: headers()..addAll(header))
         .timeout(const Duration(seconds: 5))
         .onError((error, stackTrace) {
+          logD(error);
       return http.Response('', 408);
     });
     return response(r);

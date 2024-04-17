@@ -22,7 +22,7 @@ void main(List<String> args) {
                   foregroundColor: Colors.white),
               inputDecorationTheme: InputDecorationTheme(
                   isDense: true,
-                  contentPadding: const EdgeInsets.fromLTRB(15, 8, 15, 8),
+                  contentPadding: const EdgeInsets.fromLTRB(15, 20, 15, 8),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

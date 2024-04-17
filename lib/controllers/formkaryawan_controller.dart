@@ -19,6 +19,7 @@ class FormKaryawanController extends GetxController{
         model = userModel ?? UserModel();
 
         if( userModel != null ){
+            loading.value = true;
             final r = await HTTP.get( '${URLAddress.users}/${model.idx}' );
             logD(r);
             if(r['code'] == 200){
@@ -26,6 +27,7 @@ class FormKaryawanController extends GetxController{
               model = u;
               model.idx = userModel.idx;
             }
+            loading.value = false;
         }
 
     }
@@ -48,7 +50,15 @@ class FormKaryawanController extends GetxController{
         loading.value = false;
 
         if(r['code'] == 200){
+          final error = r['json']['error'];
+          if(error == null){
             Get.back(result: true);
+          }else{
+              CherryToast.error(
+                title: const Text('Kesalahan Simpan'),
+                description: Text('${error}'),
+              ).show(Get.context!);
+          }
         }else{
            CherryToast.error(
               title: const Text('Simpan Karyawan'),

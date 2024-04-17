@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/views/karyawan/listkaryawan_view.dart';
 import 'package:laundry_owner/views/outlet/listoutlet_view.dart';
+import 'package:laundry_owner/views/pelanggan/listpelanggan_view.dart';
 import 'package:laundry_owner/views/produk/listproduk_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -102,7 +103,9 @@ class _MenuData extends StatelessWidget {
             title: 'Karyawan',
           ),
           _ItemMenuDashboard(
-            onTap: () {},
+            onTap: () {
+              Get.to(()=>const ListPelangganView());
+            },
             icon: const Icon(
               MdiIcons.accountMultiple,
               size: 32,
