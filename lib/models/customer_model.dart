@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:latlong2/latlong.dart';
 
 class CustomerModel {
   int? id;
@@ -77,4 +78,14 @@ class CustomerModel {
   ///
   /// Converts [CustomerModel] to a JSON string.
   String toJson() => json.encode(toMap());
+
+
+  LatLng? getPosition(){
+    if(pointLocation == null)return null;
+    if(pointLocation == '')return null;
+    final spl = pointLocation.toString().split(',');
+    if(spl.length < 2)return null;
+    return LatLng( double.tryParse( spl[0] ) ?? 0, double.tryParse( spl[1] ) ?? 0 );
+  }
+
 }
