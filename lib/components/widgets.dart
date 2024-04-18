@@ -18,7 +18,9 @@ class EmptyData extends StatelessWidget {
             size: 150,
             color: Color.fromARGB(255, 253, 230, 204),
           ),
-          Text(pesan ?? 'Belum ada data tersedia saat ini.'),
+          Text(pesan ?? 'Belum ada data tersedia saat ini.',
+            textAlign: TextAlign.center,
+          ),
         ],
       )),
     );
