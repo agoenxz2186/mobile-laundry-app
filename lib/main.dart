@@ -5,12 +5,17 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:laundry_owner/models/user_model.dart'; 
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/views/dashboard_view.dart';
-import 'package:laundry_owner/views/login_view.dart'; 
+import 'package:laundry_owner/views/login_view.dart';
+import 'package:nominatim_flutter/nominatim_flutter.dart'; 
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
   initializeDateFormatting('id_ID');
+  NominatimFlutter.instance.configureDioCache(
+    useCacheInterceptor: true,
+    maxStale: const Duration(days: 8)
+  );
 
   runApp( GetMaterialApp(
             title: 'L-dry Owner',

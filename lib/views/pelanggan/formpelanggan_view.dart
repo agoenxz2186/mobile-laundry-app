@@ -99,14 +99,6 @@ class FormPelangganView extends StatelessWidget {
                       },
                     ),
                 
-                    _inputText(value: controller.modelObs.value.village, 
-                      label: 'Desa',  
-                      onChanged: (value) {
-                          controller.modelObs.value.village = value;
-                      },
-                    ),
-                
-                
                      _inputText(value: controller.modelObs.value.notes, 
                       label: 'Catatan',  
                       onChanged: (value) {

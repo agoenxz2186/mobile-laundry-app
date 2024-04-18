@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart';
-import 'package:laundry_owner/controllers/listpelanggan_controller.dart';
-import 'package:laundry_owner/models/customer_model.dart';
-import 'package:laundry_owner/views/pelanggan/formpelanggan_view.dart';
+import 'package:laundry_owner/controllers/listmetodebayar_controller.dart'; 
+import 'package:laundry_owner/models/laundry_outlet_model.dart';
+import 'package:laundry_owner/models/payment_method_model.dart';
+import 'package:laundry_owner/views/metodebayar/formmetodebayar_view.dart'; 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:quickalert/quickalert.dart';
 
-class ListPelangganView extends StatelessWidget {
-  const ListPelangganView({super.key});
+class ListMetodeBayarView extends StatelessWidget {
+  final LaundryOutletModel lo;
+  const ListMetodeBayarView({super.key, required this.lo});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ListPelangganController());
+    final controller = Get.put(ListMetodeBayarController(lo));
     
     return Scaffold(
        appBar: AppBar(
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Daftar Pelanggan'),
+              const Text('Daftar Metode Pembayaran'),
               Obx( () {
                   return controller.modeSelected.value ? 
                        DefaultTextStyle(
@@ -34,8 +36,8 @@ class ListPelangganView extends StatelessWidget {
             Obx(() => controller.modeSelected.value ? Row(children: [
               IconButton(onPressed: (){
                  QuickAlert.show(context: context, type: QuickAlertType.confirm,
-                  title: 'Hapus Pelanggan',
-                  text: '${controller.itemSelected.keys.length} data Pelanggan akan dihapus, mau tetap dilanjutkan?',
+                  title: 'Hapus Metode Bayar',
+                  text: '${controller.itemSelected.keys.length} data Metode Pembayaran akan dihapus, mau tetap dilanjutkan?',
                   onCancelBtnTap: (){
                       Get.close(0);
                   },
@@ -54,7 +56,7 @@ class ListPelangganView extends StatelessWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context,
-                    MaterialPageRoute(builder: (c) => const FormPelangganView()))
+                    MaterialPageRoute(builder: (c) => FormMetodeBayarView(lo: lo,)))
                 .then((value) {
               if (value == true) controller.loadRefresh();
             });
@@ -72,7 +74,7 @@ class ListPelangganView extends StatelessWidget {
             child: ListView(
               children: [
                 for(var n in controller.data)
-                 _ItemPelanggan(n: n, controller: controller,)
+                 _ItemData(n: n, controller: controller,)
               ],
             ),
           );
@@ -82,15 +84,15 @@ class ListPelangganView extends StatelessWidget {
   }
 }
 
-class _ItemPelanggan extends StatelessWidget {
-  const _ItemPelanggan({
+class _ItemData extends StatelessWidget {
+  const _ItemData({
     super.key,
     required this.controller,
     required this.n,
   });
 
-  final CustomerModel n;
-  final ListPelangganController controller;
+  final PaymentMethodModel n;
+  final ListMetodeBayarController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +107,7 @@ class _ItemPelanggan extends StatelessWidget {
               controller.onItemTap(n);
           },
      title: Text('${n.name}'),
-     subtitle: Text('${n.address}\n${n.phone}',
+     subtitle: Text('${n.laundryOutlet}\n${n.bank} ${n.accountNo}',
       style: const TextStyle(fontSize: 12, color: Colors.grey),
      ),
     );

@@ -97,6 +97,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
+  dio:
+    dependency: transitive
+    description:
+      name: dio
+      sha256: "11e40df547d418cc0c4900a9318b26304e665da6fa4755399a9ff9efd09034b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.3+1"
+  dio_cache_interceptor:
+    dependency: transitive
+    description:
+      name: dio_cache_interceptor
+      sha256: fb7905c0d12075d8786a6b63bffd64ae062d053f682cfaf28d145a2686507308
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.0"
   fake_async:
     dependency: transitive
     description:
@@ -520,6 +536,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  nominatim_flutter:
+    dependency: "direct main"
+    description:
+      name: nominatim_flutter
+      sha256: "93923b7a208ce457832a17622950f10259c9d854b0c5edda48802ead40035d70"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   page_route_animator:
     dependency: "direct main"
     description:

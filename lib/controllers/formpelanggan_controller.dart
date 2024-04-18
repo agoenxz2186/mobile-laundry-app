@@ -9,6 +9,8 @@ import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:nominatim_flutter/model/request/request.dart';
+import 'package:nominatim_flutter/nominatim_flutter.dart';
 
 class FormPelangganController extends GetxController{
     RxBool loading = false.obs; 
@@ -67,21 +69,41 @@ class FormPelangganController extends GetxController{
     void setPointLocation(LatLng v){
       loading.value = true;
       model.pointLocation = '${v.latitude}, ${v.longitude}';
-      GeocodingPlatform.instance?.placemarkFromCoordinates(v.latitude, v.longitude)
-      .then((value) {
-        if(value.isNotEmpty){
+      logD('posisis : ${model.pointLocation}');
+
+      NominatimFlutter.instance.reverse(
+        reverseRequest: ReverseRequest(lat: v.latitude, lon: v.longitude)
+      ).then((value){
             loading.value = true;
-            model.city = value.first.subAdministrativeArea;
-            model.district = value.first.locality;
-            model.subdistrict = value.first.subLocality;
-            model.address = value.first.street;
+            model.city = value.address?['city'];
+            model.district =  value.address?['city_district'];
+            model.subdistrict = value.address?['village'];
+            model.address = value.address?['road'];
             loading.value = false;
             modelObs.value = model;
-            logD("tes");
+            logD("$value");
             logD(modelObs.value.pointLocation);
-        }
-      }); 
-      modelObs.value = model;
-      loading.value = false;
+      }).onError((error, stackTrace) {
+          loading.value = false;
+      });
+
+
+      // GeocodingPlatform.instance?.placemarkFromCoordinates(v.latitude, v.longitude)
+      // .then((value) {
+      //   logD(value);
+      //   if(value.isNotEmpty){
+      //       loading.value = true;
+      //       model.city = value.first.subAdministrativeArea;
+      //       model.district = value.first.locality;
+      //       model.subdistrict = value.first.subLocality;
+      //       model.address = value.first.street;
+      //       loading.value = false;
+      //       modelObs.value = model;
+      //       logD("tes");
+      //       logD(modelObs.value.pointLocation);
+      //   }
+      // }); 
+      // modelObs.value = model;
+      // loading.value = false;
   }
 }

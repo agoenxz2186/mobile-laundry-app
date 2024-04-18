@@ -1,27 +1,32 @@
 
 import 'package:get/get.dart';
 import 'package:laundry_owner/models/customer_model.dart';
+import 'package:laundry_owner/models/laundry_outlet_model.dart';
+import 'package:laundry_owner/models/payment_method_model.dart';
 import 'package:laundry_owner/models/user_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
+import 'package:laundry_owner/views/metodebayar/formmetodebayar_view.dart';
 import 'package:laundry_owner/views/pelanggan/formpelanggan_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class ListPelangganController extends GetxController{
+class ListMetodeBayarController extends GetxController{
    RxBool isLoading = false.obs;
-   RxList<CustomerModel> data = <CustomerModel>[].obs;
+   RxList<PaymentMethodModel> data = <PaymentMethodModel>[].obs;
    String keyword = '';
    int _page = 1;
    RxMap itemSelected = RxMap();
    RxBool modeSelected = false.obs;
    RefreshController refreshController = RefreshController(initialRefresh: true);
+   final LaundryOutletModel lo;
 
+   ListMetodeBayarController(this.lo);
 
    Future loadRefresh([int page = 1])async{
      _page = page;
      isLoading.value = true; 
-     final r = await HTTP.get( '${URLAddress.customers}?keyword=${Uri.encodeFull(keyword)}&page=$_page' );
+     final r = await HTTP.get( '${URLAddress.paymentMethods}/${lo.idx}/?keyword=${Uri.encodeFull(keyword)}&page=$_page' );
      logD(r);
      isLoading.value = false; 
      refreshController.refreshCompleted();
@@ -32,7 +37,7 @@ class ListPelangganController extends GetxController{
         if(page <=1) data.clear();
 
         for(var n in d){
-            data.add( CustomerModel.fromMap(n) );
+            data.add(  PaymentMethodModel.fromMap(n) );
         }
      }
 
@@ -44,11 +49,11 @@ class ListPelangganController extends GetxController{
    }
 
    
-  void onItemTap(CustomerModel v){
+  void onItemTap(PaymentMethodModel v){
     if( modeSelected.value == true){
         addItemSelected(v.idx);
     }else{
-        Get.to(()=>FormPelangganView(model: v),
+        Get.to(()=>FormMetodeBayarView(model: v),
           transition: Transition.zoom
         )?.then((value) {
             if(value == true){
@@ -67,7 +72,7 @@ class ListPelangganController extends GetxController{
       }
   }
 
-  bool isItemSelected(UserModel v){
+  bool isItemSelected(PaymentMethodModel v){
      final r = itemSelected[v.id];
      logD("isitem selected = $r");
      return r != null;
@@ -79,7 +84,7 @@ class ListPelangganController extends GetxController{
 
   Future hapusData()async{
       Get.close(0);
-      final r = await HTTP.delete(URLAddress.customers, data:{
+      final r = await HTTP.delete(URLAddress.paymentMethods, data:{
         'id': itemSelected.keys.toList()
       });
       logD(itemSelected.keys.toList());
