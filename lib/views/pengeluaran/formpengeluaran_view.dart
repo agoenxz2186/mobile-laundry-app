@@ -41,7 +41,7 @@ class FormPengeluaranView extends StatelessWidget {
                     ),
 
                     _inputText(
-                      value: controller.model.nominal,
+                      value: controller.model.fmtNominal(),
                       label: 'Nominal',
                       onChanged: (value) {
                         controller.model.nominal = value;
