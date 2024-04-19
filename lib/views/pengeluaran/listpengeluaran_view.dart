@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/views/pengeluaran/page_bulan_ini_view.dart';
+import 'package:laundry_owner/views/pengeluaran/page_bulan_lainnya_view.dart';
 
 class ListPengeluaranView extends StatelessWidget {
-  const ListPengeluaranView({super.key});
+  final LaundryOutletModel lo;
+  const ListPengeluaranView({super.key, required this.lo});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +13,14 @@ class ListPengeluaranView extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Pengeluaran'),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Pengeluaran'),
+              Text('${lo.name}', style: const TextStyle(fontSize: 12),)
+            ],
+          ),
+          
           bottom: const TabBar(
             labelStyle: TextStyle(color: Colors.white),
             unselectedLabelStyle: TextStyle(color: Color.fromARGB(255, 209, 185, 150)),
@@ -22,8 +32,8 @@ class ListPengeluaranView extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-              PageBulanIniView(),
-              Text('Bulan lainnya'),
+              PageBulanIniView(lo),
+              PageBulanLainnyaView(lo)
           ],
         ),
       ),

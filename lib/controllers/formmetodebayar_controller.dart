@@ -80,4 +80,5 @@ class FormMetodeBayarController extends GetxController{
         model.isActive = v;
         loading.value = false;
     }
+
 }
