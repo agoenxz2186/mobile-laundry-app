@@ -22,7 +22,7 @@ class PageBulanIniView extends StatelessWidget {
     
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
-          Get.to(()=>const FormPengeluaranView());
+          Get.to(()=> FormPengeluaranView(lo));
       }, child: const Icon(MdiIcons.plus),),
       body: Obx( () {
           return SmartRefresher(controller: controller.refreshController,

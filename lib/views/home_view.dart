@@ -72,7 +72,7 @@ class _MenuData extends StatelessWidget {
           ]),
       width: double.infinity,
       child: Wrap(
-        alignment: WrapAlignment.start,
+        alignment: WrapAlignment.spaceAround,
         children: [
           _ItemMenuDashboard(
             onTap: () {

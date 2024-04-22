@@ -2,6 +2,9 @@ class URLAddress {
   static const String baseURL = 'https://ldr889.apersikalbar.com/api/';
   static const String auth = '${baseURL}auth';
   static const String users = '${baseURL}users';
+  static const String accountingNumberPendapatan = '${baseURL}accounting-number/pendapatan';
+  static const String accountingNumberPengeluaran = '${baseURL}accounting-number/pengeluaran';
+  static const String accountingNumber = '${baseURL}accounting-number';
   static const String cashJournal = '${baseURL}cash-journal';
   static const String customers = '${baseURL}customers';
   static const String customerBalances = '${baseURL}customer-balances';

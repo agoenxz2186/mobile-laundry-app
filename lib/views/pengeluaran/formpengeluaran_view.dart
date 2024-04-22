@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/components/select_view.dart';
 import 'package:laundry_owner/controllers/formpengeluaran_controller.dart';
+import 'package:laundry_owner/models/accounting_number.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
+import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart';
 
 class FormPengeluaranView extends StatelessWidget {
-  const FormPengeluaranView({super.key});
+  final LaundryOutletModel lo;
+  const FormPengeluaranView(this.lo, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,38 +20,93 @@ class FormPengeluaranView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pengeluaran'),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Pengeluaran'),
+            Text('${lo.name}', style: const TextStyle(fontSize: 13),)
+          ],
+        ),
+        actions: [
+           Obx(() => controller.loading.value ? 
+            const CupertinoActivityIndicator() :
+            IconButton(
+              onPressed: ()=>controller.submit(), 
+              icon: const Icon(MdiIcons.contentSave)
+            ))
+        ],
       ),
+      
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Obx( () {
-              return Column(
-                children: [
-                    if(controller.loading.value)const Center(child: CupertinoActivityIndicator(),),
-                    
-                    _inputText(value: controller.model.transactionAt(),
-                      label: 'Tanggal Transaksi',
-                      readOnly: true,
-                      onTap: () => controller.pilihTanggal()
-                    ),
+              return Form(
+                key: controller.form,
+                child: Column(
+                  children: [
+                      if(controller.loading.value)const Center(child: CupertinoActivityIndicator(),),
+                      
+                      _inputText(value: controller.model.transactionAt(),
+                        label: 'Tanggal Transaksi',
+                        teksIfEmpty: 'Tanggal harus diisikan',
+                        readOnly: true,
+                        onTap: () => controller.pilihTanggal()
+                      ),
 
-                    _inputText(
-                      value: controller.model.name,
-                      label: 'Nama Transaksi',
-                      onChanged: (value) {
-                        controller.model.name = value;
-                      },
-                    ),
+                      SelectField(
+                        label: const Text('Jenis Transaksi'),
+                        controller: controller.accountNumberTextController,
+                        url: URLAddress.accountingNumberPengeluaran,
+                        validator: (value) {
+                          return (controller.model.accountNo ?? '' ).isEmpty ? 'Jenis transaksi harus dipilih' : null;
+                        },
+                        title: 'Pilih Jenis Transaksi',
+                        onItemRender: (n) {
+                            final aa = AccountingNumber.fromMap(n);
+                            return ListTile(
+                              title: Text('${aa.code} - ${aa.name}'),
+                            );
+                        },
+                        onChanged: (value) {
+                          controller.setAccountNumber( AccountingNumber.fromMap(value) );
+                        },
+                      ),
 
-                    _inputText(
-                      value: controller.model.fmtNominal(),
-                      label: 'Nominal',
-                      onChanged: (value) {
-                        controller.model.nominal = value;
-                      },
-                    )
-                ],
+                      const SizedBox(height: 15,),
+                
+                      _inputText(
+                        value: controller.model.name,
+                        label: 'Nama Transaksi',
+                        teksIfEmpty: 'Nama transaksi harus diisikan',
+                        onChanged: (value) {
+                          controller.model.name = value;
+                        },
+                      ),
+                
+                      _inputText(
+                        value: controller.model.fmtNominal(),
+                        label: 'Nominal',
+                        textAlign: TextAlign.right,
+                        teksIfEmpty: 'Nominal harus diisikan',
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          controller.model.nominal = double.tryParse('$value') ?? 0;
+                          controller.loading.value = false;
+                        },
+                      ),
+
+                       _inputText(
+                        value: controller.model.description,
+                        label: 'Deskripsi',  
+                        minLines: 2,
+                        maxLines: 5,
+                        onChanged: (value) {
+                          controller.model.description = value ?? 0;
+                        },
+                      )
+                  ],
+                ),
               );
             }
           ),
@@ -55,30 +114,7 @@ class FormPengeluaranView extends StatelessWidget {
       ) );
            
   }
-
-  SelectField _selectOutletLaundry(FormPengeluaranController controller) {
-    return SelectField(
-                    title: 'Pilih Outlet',
-                    label: const Text('Outlet'),
-                    url: URLAddress.laundryOutlets,
-                    validator: (value) {
-                        return (controller.model.laundryOutletId ?? 0) <= 0 ? 'Outlet harus diisikan' : null;
-                    },
-                    controller: controller.OutletController,
-                    onAddNewTap: (controller){
-                        Get.to(()=>const FormOutletView())?.then((value) {
-                            controller.loadRefresh();
-                        });
-                    },
-                    onChanged: (value) { 
-                        controller.setOutletLaundry( LaundryOutletModel.fromMap(value) );
-                    },
-                    onItemRender: (n) {       
-                        final r = LaundryOutletModel.fromMap(n);
-                        return ListTile(title: Text('${r.name}'));
-                    },
-                  );
-  }
+ 
 
   Widget _inputText({
     String? value,
@@ -88,7 +124,8 @@ class FormPengeluaranView extends StatelessWidget {
     TextInputType? keyboardType,
     int? minLines, int? maxLines,
     bool readOnly = false,
-    VoidCallback? onTap
+    VoidCallback? onTap,
+    TextAlign textAlign = TextAlign.start
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 7),
@@ -98,6 +135,7 @@ class FormPengeluaranView extends StatelessWidget {
                   keyboardType: keyboardType,
                   minLines: minLines,
                   maxLines: maxLines,
+                  textAlign: textAlign,
                   controller: TextEditingController(text: value),
                   validator: (value) {
                     return (value ?? '').isEmpty ? teksIfEmpty : null;

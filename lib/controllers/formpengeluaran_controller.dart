@@ -3,6 +3,7 @@ import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:laundry_owner/models/accounting_number.dart';
 import 'package:laundry_owner/models/cash_journal_model.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
@@ -14,6 +15,7 @@ class FormPengeluaranController extends GetxController{
   CashJournalModel model = CashJournalModel();
   RxBool loading = false.obs;
   TextEditingController OutletController = TextEditingController();
+  TextEditingController accountNumberTextController = TextEditingController();
   
 
   void initModel(CashJournalModel? pm, LaundryOutletModel? lo)async{
@@ -30,6 +32,8 @@ class FormPengeluaranController extends GetxController{
           if(r['code'] == 200){
             final u = CashJournalModel.fromMap(r['json']['data']);
             model = u;
+            model.laundryOutletId ??= lo?.id;
+            model.laundryOutlet ??= lo?.name;
             model.idx = pm.idx;
           }
           loading.value = false;
@@ -65,12 +69,16 @@ class FormPengeluaranController extends GetxController{
       }
   }
 
-  void setOutletLaundry(LaundryOutletModel lo){
+  void setAccountNumber(AccountingNumber an){
     loading.value = true;
-    model.laundryOutletId = lo.id;
-    OutletController.text = lo.name ?? '';
+    model.account = an.name;
+    model.accountNo = an.code;
+    model.accountingNumberId = an.id;
+    accountNumberTextController.text = '${an.code} - ${an.name}';
     loading.value = false;
   }
+
+
 
   void pilihTanggal(){
      showDatePicker(context: Get.context!, 
