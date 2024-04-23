@@ -12,7 +12,7 @@ import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:quickalert/quickalert.dart';
 
-class FormPengeluaranController extends GetxController{
+class FormPemasukkanController extends GetxController{
   GlobalKey<FormState> form = GlobalKey();
   CashJournalModel model = CashJournalModel();
   RxBool loading = false.obs;

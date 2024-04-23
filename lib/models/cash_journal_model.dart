@@ -57,7 +57,7 @@ class CashJournalModel {
 
   String fmtNominal(){
     try{
-      return NumberFormat.currency(locale: 'id_ID', symbol: 'IDR').format(nominal) ;
+      return NumberFormat.currency(locale: 'id_ID', decimalDigits: 0, symbol: 'Rp ').format(nominal) ;
     }catch(e){
       logD("error $e");
     }

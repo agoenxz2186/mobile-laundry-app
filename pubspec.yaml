@@ -48,6 +48,7 @@ dependencies:
   image_picker: ^1.0.7
   intl: ^0.18.0
   lite_rolling_switch: ^1.0.1
+  mask_text_input_formatter: ^2.9.0
   nominatim_flutter: ^0.0.3
   page_route_animator: ^1.0.3
   page_route_transition: ^3.1.2

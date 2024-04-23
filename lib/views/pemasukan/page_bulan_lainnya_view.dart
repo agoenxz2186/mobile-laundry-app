@@ -9,7 +9,7 @@ import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
-import 'package:laundry_owner/views/pengeluaran/formpengeluaran_view.dart';
+import 'package:laundry_owner/views/pemasukan/formpemasukan_view.dart'; 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PageBulanLainnyaView extends StatefulWidget {
@@ -35,7 +35,7 @@ class _PageBulanLainnyaviewState extends State<PageBulanLainnyaView> with Automa
     
     return Scaffold(
       floatingActionButton: FloatingActionButton(onPressed: (){
-          Get.to(()=>FormPengeluaranView(widget.lo))?.then((value) {
+          Get.to(()=>FormPemasukanView(widget.lo))?.then((value) {
               controller.onRefresh();
           });
 
@@ -76,7 +76,7 @@ class _PageBulanLainnyaviewState extends State<PageBulanLainnyaView> with Automa
            for(var n in data ?? [])
                     ListTile(
                       onTap: () {
-                         Get.to(()=>FormPengeluaranView(widget.lo, model: n,))?.then((value) {
+                         Get.to(()=>FormPemasukanView(widget.lo, model: n,))?.then((value) {
                             controller.onRefresh();
                          });
                       },
@@ -138,7 +138,7 @@ class _PageBulanLainnyaController extends GetxController{
   Future onRefresh([int page = 1])async{
       _page = page;
       isLoading.value = true; 
-      final url = '${URLAddress.cashJournal}/pengeluaran/${lo.idx}/?keyword=${Uri.encodeFull(keyword)}&page=$page';
+      final url = '${URLAddress.cashJournal}/pemasukan/${lo.idx}/?keyword=${Uri.encodeFull(keyword)}&page=$page';
       final r = await HTTP.get(url); 
 
       if(page == 1){ 
