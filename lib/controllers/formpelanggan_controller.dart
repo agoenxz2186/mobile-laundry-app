@@ -2,7 +2,6 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart'; 
 import 'package:laundry_owner/models/customer_model.dart'; 
 import 'package:laundry_owner/utils/global_variable.dart';

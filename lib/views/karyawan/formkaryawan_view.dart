@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:laundry_owner/controllers/formkaryawan_controller.dart';
 import 'package:laundry_owner/models/user_model.dart'; 
 import 'package:laundry_owner/utils/global_variable.dart';

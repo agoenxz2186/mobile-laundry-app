@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/models/product_category_model.dart';
-import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 

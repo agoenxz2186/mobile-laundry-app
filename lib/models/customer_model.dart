@@ -1,4 +1,5 @@
-import 'dart:convert';
+import 'dart:convert' show json;
+// ignore: depend_on_referenced_packages
 import 'package:latlong2/latlong.dart';
 
 class CustomerModel {

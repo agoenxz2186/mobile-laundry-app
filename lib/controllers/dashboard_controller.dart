@@ -1,7 +1,6 @@
 
 import 'package:geolocator/geolocator.dart';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get.dart'; 
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:latlong2/latlong.dart';
 

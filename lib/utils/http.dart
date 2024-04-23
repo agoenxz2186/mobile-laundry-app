@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:convert'; 
 
 import 'package:http/http.dart' as http;
 import 'package:laundry_owner/utils/global_variable.dart';
@@ -43,9 +42,7 @@ class HTTP {
         .timeout(const Duration(seconds: 5))
         .onError((error, stackTrace) {
       return http.Response('', 408);
-    });
-    logD(url + ' : ' + jsonEncode(data));
-    
+    }); 
     return response(r);
   }
 

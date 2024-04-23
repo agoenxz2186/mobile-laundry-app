@@ -1,9 +1,7 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/components/select_view.dart';
-import 'package:laundry_owner/controllers/formcategoryproduct_controller.dart';
 import 'package:laundry_owner/controllers/formproduct_controller.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/models/product_category_model.dart';

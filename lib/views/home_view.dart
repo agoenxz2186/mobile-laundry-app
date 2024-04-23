@@ -3,12 +3,10 @@ import 'package:flutter_material_design_icons/flutter_material_design_icons.dart
 import 'package:get/get.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/views/karyawan/listkaryawan_view.dart';
-import 'package:laundry_owner/views/metodebayar/listmetodebayar_view.dart';
 import 'package:laundry_owner/views/metodebayar/select_outlet_view.dart';
 import 'package:laundry_owner/views/outlet/listoutlet_view.dart';
 import 'package:laundry_owner/views/pelanggan/listpelanggan_view.dart';
 import 'package:laundry_owner/views/pemasukan/select_outlet_view.dart';
-import 'package:laundry_owner/views/pengeluaran/listpengeluaran_view.dart';
 import 'package:laundry_owner/views/pengeluaran/select_outlet_view.dart';
 import 'package:laundry_owner/views/produk/listproduk_view.dart';
 

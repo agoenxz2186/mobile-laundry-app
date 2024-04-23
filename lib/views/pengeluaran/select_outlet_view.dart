@@ -5,7 +5,6 @@ import 'package:laundry_owner/components/widgets.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
-import 'package:laundry_owner/views/metodebayar/listmetodebayar_view.dart';
 import 'package:laundry_owner/views/pengeluaran/listpengeluaran_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

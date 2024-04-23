@@ -1,14 +1,11 @@
 
 import 'package:get/get.dart';
-import 'package:laundry_owner/models/customer_model.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/models/payment_method_model.dart';
-import 'package:laundry_owner/models/user_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:laundry_owner/views/metodebayar/formmetodebayar_view.dart';
-import 'package:laundry_owner/views/pelanggan/formpelanggan_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ListMetodeBayarController extends GetxController{

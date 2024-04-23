@@ -58,7 +58,7 @@ class ListOutletView extends StatelessWidget {
             Navigator.push(context,
                     MaterialPageRoute(builder: (c) => const FormOutletView()))
                 .then((value) {
-              if (value == true) controller.refresh();
+              if (value == true) controller.onRefresh();
             });
           },
           child: const Icon(MdiIcons.storeEdit),
@@ -69,7 +69,7 @@ class ListOutletView extends StatelessWidget {
                 controller.loadmore();
               },
               onRefresh: () {
-                controller.refresh();
+                controller.onRefresh();
               },
               child: ListView(
                 children: [
@@ -92,7 +92,6 @@ class ListOutletView extends StatelessWidget {
 
 class _ItemListLaundryOutlet extends StatelessWidget {
   const _ItemListLaundryOutlet({
-    super.key,
     required this.controller,
     required this.v,
   });

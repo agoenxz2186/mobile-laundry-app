@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart';
 import 'package:laundry_owner/components/select_view.dart';
-import 'package:laundry_owner/controllers/formpemasukan_controller.dart';
+import 'package:laundry_owner/controllers/formpengeluaran_controller.dart';
 import 'package:laundry_owner/models/accounting_number.dart';
 import 'package:laundry_owner/models/cash_journal_model.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
@@ -12,14 +12,14 @@ import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/text_formatter.dart';
 import 'package:laundry_owner/utils/url_address.dart'; 
 
-class FormPemasukanView extends StatelessWidget {
+class FormPengeluaranView extends StatelessWidget {
   final LaundryOutletModel lo;
   final CashJournalModel? model;
-  const FormPemasukanView(this.lo, {this.model, super.key});
+  const FormPengeluaranView(this.lo, {this.model, super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(FormPemasukkanController());
+    final controller = Get.put(FormPengeluaranController());
     controller.initModel(model, lo);
 
     return Scaffold(
@@ -27,7 +27,7 @@ class FormPemasukanView extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Pemasukan'),
+            const Text('Pengeluaran'),
             Text('${lo.name}', style: const TextStyle(fontSize: 13),)
           ],
         ),
@@ -82,7 +82,7 @@ class FormPemasukanView extends StatelessWidget {
                       SelectField(
                         label: const Text('Jenis Transaksi'),
                         controller: controller.accountNumberTextController,
-                        url: URLAddress.accountingNumberPendapatan,
+                        url: URLAddress.accountingNumberPengeluaran,
                         validator: (value) {
                           return (controller.model.accountNo ?? '' ).isEmpty ? 'Jenis transaksi harus dipilih' : null;
                         },

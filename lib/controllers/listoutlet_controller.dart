@@ -1,13 +1,11 @@
 
-import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get.dart'; 
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:quickalert/quickalert.dart';
 
 class ListOutletController extends GetxController{
   
@@ -41,7 +39,7 @@ class ListOutletController extends GetxController{
   }
 
 
-  Future refresh() async {
+  Future onRefresh() async {
     _load(1);
     refreshController.refreshCompleted();
   }

@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:laundry_owner/components/widgets.dart';
 import 'package:laundry_owner/models/cash_journal_model.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
-import 'package:laundry_owner/utils/global_variable.dart'; 
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:laundry_owner/views/pemasukan/formpemasukan_view.dart';
@@ -24,8 +23,7 @@ class _PageBulanIniViewState extends State<PageBulanIniView> with AutomaticKeepA
   late _PageBulanIniController controller;
 
   @override
-  void initState() {
-    // TODO: implement initState
+  void initState() { 
     super.initState();
     controller = Get.put(_PageBulanIniController(widget.lo));
   }
@@ -124,8 +122,8 @@ class _PageBulanIniController extends GetxController{
       final bulan = DateTime.now().month;
       final url = '${URLAddress.cashJournal}/pemasukan/${lo.idx}/$tahun/$bulan/?keyword=${Uri.encodeFull(keyword)}&page=$page';
       final r = await HTTP.get(url); 
-      logD("pendapatan : $r");
-      
+      // logD("pendapatan : $r");
+
       if(page == 1)data.clear();
 
       if(r['code'] == 200){
