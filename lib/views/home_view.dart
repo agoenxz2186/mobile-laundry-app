@@ -8,6 +8,7 @@ import 'package:laundry_owner/views/outlet/listoutlet_view.dart';
 import 'package:laundry_owner/views/pelanggan/listpelanggan_view.dart';
 import 'package:laundry_owner/views/pemasukan/select_outlet_view.dart';
 import 'package:laundry_owner/views/pengeluaran/select_outlet_view.dart';
+import 'package:laundry_owner/views/penjualan/listpenjualan_view.dart';
 import 'package:laundry_owner/views/produk/listproduk_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -150,7 +151,9 @@ class _MenuData extends StatelessWidget {
             title: 'Pemasukan',
           ),
           _ItemMenuDashboard(
-            onTap: () {},
+            onTap: () {
+               Get.to(()=>const ListPenjualanView());
+            },
             icon: const Icon(
               MdiIcons.washingMachine,
               size: 32,

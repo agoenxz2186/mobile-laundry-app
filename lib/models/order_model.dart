@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class OrderModel {
   int? id;
   String? orderAt;
@@ -107,4 +109,11 @@ class OrderModel {
   ///
   /// Converts [OrderModel] to a JSON string.
   String toJson() => json.encode(toMap());
+
+  DateTime? orderAtDateTime(){
+      try{
+         return DateFormat('y-MM-dd').parse(orderAt ?? '');
+      }catch(e){}
+      return null;
+  }
 }
