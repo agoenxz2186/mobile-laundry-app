@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:laundry_owner/views/penjualan/page_order_baru_view%20copy.dart';
 import 'package:laundry_owner/views/penjualan/page_order_baru_view.dart';
 import 'package:laundry_owner/views/penjualan/page_order_batal_view.dart';
 import 'package:laundry_owner/views/penjualan/page_order_proses_view.dart';
+import 'package:laundry_owner/views/penjualan/page_order_selesai_view.dart';
  
 
 class ListPenjualanView extends StatelessWidget { 

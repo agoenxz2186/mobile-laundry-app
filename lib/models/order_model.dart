@@ -8,16 +8,16 @@ class OrderModel {
   int? customerId;
   int? laundryOutletId;
   int? logUserId;
-  String? subtotal;
-  int? discountAmount;
-  int? discountPercent;
-  int? taxAmount;
-  int? taxPercent;
-  int? totalPrice;
+  double? subtotal;
+  double? discountAmount;
+  double? discountPercent;
+  double? taxAmount;
+  double? taxPercent;
+  double? totalPrice;
   String? status;
   String? notesFromOutlet;
-  int? pickerFee;
-  int? deliveryFee;
+  double? pickerFee;
+  double? deliveryFee;
   dynamic createdAt;
   dynamic updatedAt;
   String? customer;
@@ -32,16 +32,16 @@ class OrderModel {
     this.customerId,
     this.laundryOutletId,
     this.logUserId,
-    this.subtotal,
-    this.discountAmount,
-    this.discountPercent,
-    this.taxAmount,
-    this.taxPercent,
-    this.totalPrice,
-    this.status,
+    this.subtotal = 0.0,
+    this.discountAmount = 0 ,
+    this.discountPercent = 0,
+    this.taxAmount = 0,
+    this.taxPercent = 0,
+    this.totalPrice = 0,
+    this.status = 'baru',
     this.notesFromOutlet,
-    this.pickerFee,
-    this.deliveryFee,
+    this.pickerFee= 0,
+    this.deliveryFee= 0,
     this.createdAt,
     this.updatedAt,
     this.customer,
@@ -57,16 +57,16 @@ class OrderModel {
         customerId: data['customer_id'] as int?,
         laundryOutletId: data['laundry_outlet_id'] as int?,
         logUserId: data['log_user_id'] as int?,
-        subtotal: data['subtotal'] as String?,
-        discountAmount: data['discount_amount'] as int?,
-        discountPercent: data['discount_percent'] as int?,
-        taxAmount: data['tax_amount'] as int?,
-        taxPercent: data['tax_percent'] as int?,
-        totalPrice: data['total_price'] as int?,
+        subtotal: double.tryParse("${data['subtotal']}"),
+        discountAmount: double.tryParse('${data['discount_amount']}'), //data['discount_amount'] as int?,
+        discountPercent:double.tryParse('${data['discount_percent']}'),// data['discount_percent'] as int?,
+        taxAmount: double.tryParse('${data['tax_amount']}'), //data['tax_amount'] as int?,
+        taxPercent: double.tryParse('${data['tax_percent']}'),  //data['tax_percent'] as int?,
+        totalPrice: double.tryParse('${data['total_price']}'),
         status: data['status'] as String?,
         notesFromOutlet: data['notes_from_outlet'] as String?,
-        pickerFee: data['picker_fee'] as int?,
-        deliveryFee: data['delivery_fee'] as int?,
+        pickerFee: double.tryParse('${data['picker_fee']}'), //data['picker_fee'] as int?,
+        deliveryFee: double.tryParse('${data['delivery_fee']}'), //data['delivery_fee'] as int?,
         createdAt: data['created_at'] as dynamic,
         updatedAt: data['updated_at'] as dynamic,
         customer: data['customer'] as String?,
@@ -115,5 +115,9 @@ class OrderModel {
          return DateFormat('y-MM-dd').parse(orderAt ?? '');
       }catch(e){}
       return null;
+  }
+
+  String fmtOrderAt(){
+    return DateFormat('EEE, dd MMM y', 'id_ID').format(orderAtDateTime() ?? DateTime.now());
   }
 }

@@ -47,7 +47,7 @@ class _PageOrderBaruViewState extends State<PageOrderBatalView> with AutomaticKe
   void onRefresh([int page=1])async{
     _page = 1;
 
-    final r = await HTTP.get('${URLAddress.orders}/batal/&page=$page&keyword=${Uri.encodeFull(keyword)}');
+    final r = await HTTP.get('${URLAddress.orders}/?status=batal/&page=$page&keyword=${Uri.encodeFull(keyword)}');
     if(r['code'] == 200){
         if(page == 1) data.clear();
 

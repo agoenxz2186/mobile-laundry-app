@@ -56,7 +56,7 @@ class SelectField extends StatelessWidget {
               controller: controller,
               enabled: false,
               validator: validator ,
-              decoration: const InputDecoration(
+              decoration:  const InputDecoration( 
                   suffixIcon: Icon(MdiIcons.chevronDown)
               ),
               onTap: () {

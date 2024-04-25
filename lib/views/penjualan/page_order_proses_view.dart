@@ -47,7 +47,7 @@ class _PageOrderBaruViewState extends State<PageOrderProsesView> with AutomaticK
   void onRefresh([int page=1])async{
     _page = 1;
 
-    final r = await HTTP.get('${URLAddress.orders}/proses/&page=$page&keyword=${Uri.encodeFull(keyword)}');
+    final r = await HTTP.get('${URLAddress.orders}/?status=proses/&page=$page&keyword=${Uri.encodeFull(keyword)}');
     if(r['code'] == 200){
         if(page == 1) data.clear();
 

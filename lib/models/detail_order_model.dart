@@ -4,12 +4,13 @@ class DetailOrderModel {
   int? id;
   int? orderId;
   int? productId;
+  String? product;
   String? estimateFinish;
-  String? qty;
+  double? qty;
   String? qtyUnit;
-  String? priceSale;
-  String? dppAmount;
-  String? totalPrice;
+  double? priceSale;
+  double? dppAmount;
+  double? totalPrice;
   String? queueAt;
   dynamic washAt;
   dynamic dryAt;
@@ -37,6 +38,7 @@ class DetailOrderModel {
     this.notes,
     this.createdAt,
     this.updatedAt,
+    this.product,
   });
 
   factory DetailOrderModel.fromMap(Map<String, dynamic> data) {
@@ -45,11 +47,12 @@ class DetailOrderModel {
       orderId: data['order_id'] as int?,
       productId: data['product_id'] as int?,
       estimateFinish: data['estimate_finish'] as String?,
-      qty: data['qty'] as String?,
+      qty: double.tryParse('${data['qty']}'),
+      product: data['product'] as String?,
       qtyUnit: data['qty_unit'] as String?,
-      priceSale: data['price_sale'] as String?,
-      dppAmount: data['dpp_amount'] as String?,
-      totalPrice: data['total_price'] as String?,
+      priceSale: double.tryParse('${data['price_sale']}'), //data['price_sale'] as String?,
+      dppAmount: double.tryParse('${data['dpp_amount']}'), //data['dpp_amount'] as String?,
+      totalPrice: double.tryParse('${data['total_price']}'), // data['total_price'] as String?,
       queueAt: data['queue_at'] as String?,
       washAt: data['wash_at'] as dynamic,
       dryAt: data['dry_at'] as dynamic,
@@ -66,11 +69,11 @@ class DetailOrderModel {
         'order_id': "$orderId",
         'product_id': "$productId",
         'estimate_finish': "$estimateFinish",
-        'qty': "$qty",
+        'qty': qty,
         'qty_unit': "$qtyUnit",
-        'price_sale': "$priceSale",
-        'dpp_amount': "$dppAmount",
-        'total_price': "$totalPrice",
+        'price_sale': priceSale,
+        'dpp_amount': dppAmount,
+        'total_price': totalPrice,
         'queue_at': "$queueAt",
         'wash_at': "$washAt",
         'dry_at': "$dryAt",
