@@ -99,11 +99,19 @@ class FormPenjualanView extends StatelessWidget {
         ElevatedButton.icon(onPressed: (){
             showDialog(context: Get.context!, builder: (context) {
               return Dialog(
+                insetPadding: EdgeInsets.all(10),
                 child: Container(
                   padding: const EdgeInsets.all(20),
-                  child: const Column(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-
+                        _inputText(
+                          label: 'Produk / Jasa',
+                        ),
+                        _inputText(
+                          label: 'Qty',
+                        ),
+                        
                     ],
                   ),
                 )
