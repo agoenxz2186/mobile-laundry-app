@@ -10,6 +10,7 @@ import 'package:laundry_owner/views/pemasukan/select_outlet_view.dart';
 import 'package:laundry_owner/views/pengeluaran/select_outlet_view.dart';
 import 'package:laundry_owner/views/penjualan/listpenjualan_view.dart';
 import 'package:laundry_owner/views/produk/listproduk_view.dart';
+import 'package:laundry_owner/views/produk/produk_select_outlet_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -87,7 +88,7 @@ class _MenuData extends StatelessWidget {
           ),
           _ItemMenuDashboard(
             onTap: () {
-              Get.to(()=>const ListProdukView());
+              Get.to(()=>const ProductSelectOutletView());
             },
             icon: const Icon(
               MdiIcons.iron,

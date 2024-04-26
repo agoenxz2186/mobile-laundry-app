@@ -9,6 +9,7 @@ import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/models/order_model.dart';
 import 'package:laundry_owner/utils/url_address.dart';
 import 'package:laundry_owner/views/outlet/formoutlet_view.dart';
+import 'package:laundry_owner/views/penjualan/detailorder_view.dart';
 
 class FormPenjualanView extends StatelessWidget {
   final OrderModel? model;
@@ -98,28 +99,12 @@ class FormPenjualanView extends StatelessWidget {
 
         ElevatedButton.icon(onPressed: (){
             showDialog(context: Get.context!, builder: (context) {
-              return Dialog(
+              return const Dialog(
                 insetPadding: EdgeInsets.all(10),
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                        _inputText(
-                          label: 'Produk / Jasa',
-                        ),
-                        _inputText(
-                          label: 'Qty',
-                        ),
-                        
-                    ],
-                  ),
-                )
+                child: DetailOrderView() 
               );
-            },).then((value) {
-
             });
-        }, icon: Icon(MdiIcons.cart), label: const Text('Tambah Item Jasa'))
+        }, icon: const Icon(MdiIcons.cart), label: const Text('Tambah Item Jasa'))
     ],
   );
 

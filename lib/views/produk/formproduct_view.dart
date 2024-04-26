@@ -14,7 +14,8 @@ import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
 class FormProductView extends StatelessWidget {
   final ProductModel? model;
-  const FormProductView({super.key, this.model});
+  final LaundryOutletModel? lo;
+  const FormProductView({super.key, this.lo, this.model});
 
 
 
@@ -25,7 +26,12 @@ class FormProductView extends StatelessWidget {
 
   return Scaffold(
       appBar: AppBar(
-        title: const Text('Produk / Jasa'),
+        title: Column(
+          children: [
+            const Text('Produk / Jasa'),
+            Text('${lo?.name}')
+          ],
+        ),
         actions: [
             Obx(()=>controller.isLoading.value == true ? const CupertinoActivityIndicator() : 
               IconButton(onPressed: ()=>controller.submit(),
