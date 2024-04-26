@@ -46,7 +46,7 @@ class DetailOrderView extends StatelessWidget {
                                     child: _inputText(
                                       label: 'Qty',
                                       inputFormatters: [ 
-                                          FilteringTextInputFormatter.allow( RegExp(r'^\d*.?\d{0,2}') )  ],
+                                          FilteringTextInputFormatter.allow( RegExp(r'^\d+\.?\d{0,2}$') )  ],
                                       value: '${controller.model.qty ?? 0}',
                                       keyboardType: TextInputType.number,
                                       onChanged: (value) {
