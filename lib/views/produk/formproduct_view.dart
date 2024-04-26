@@ -22,14 +22,15 @@ class FormProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(FormProductController());
-    controller.initModel(model);
+    controller.initModel(model, lo ?? LaundryOutletModel());
 
   return Scaffold(
       appBar: AppBar(
         title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Produk / Jasa'),
-            Text('${lo?.name}')
+            const Text('Produk / Jasa',),
+            Text('${lo?.name}', style: const TextStyle(fontSize: 13),)
           ],
         ),
         actions: [

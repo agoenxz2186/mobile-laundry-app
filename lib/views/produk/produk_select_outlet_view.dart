@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart'; 
 import 'package:laundry_owner/components/widgets.dart';
 import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/utils/http.dart';
 import 'package:laundry_owner/utils/url_address.dart';
-import 'package:laundry_owner/views/metodebayar/listmetodebayar_view.dart';
 import 'package:laundry_owner/views/produk/listproduk_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -27,7 +27,8 @@ class ProductSelectOutletView extends StatelessWidget {
               onLoading: () => controller.loadMore(),
               child: ListView(
                 children: [
-                  controller.isLoading.value ? const CupertinoActivityIndicator() : SizedBox(),
+                  controller.isLoading.value ? const CupertinoActivityIndicator() : 
+                    const SizedBox(),
 
                   if(controller.data.isEmpty)
                     const EmptyData(pesan: 'Outlet belum ada',),
@@ -37,6 +38,7 @@ class ProductSelectOutletView extends StatelessWidget {
                       onTap: () {
                           Get.to(()=>ListProdukView(n));
                       },
+                      leading: const Icon(MdiIcons.store),
                       title: Text('${n.name}'),
                       subtitle: Text('${n.address}'),
                     )

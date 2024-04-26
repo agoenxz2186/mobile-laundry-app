@@ -1,4 +1,6 @@
-import 'dart:convert'; 
+import 'dart:convert';
+
+import 'package:intl/intl.dart'; 
 
 class ProductModel {
   int? id;
@@ -61,6 +63,12 @@ class ProductModel {
         idx: data['idx'] as String?,
         isAvailable:bool.tryParse( '${data['is_available']}' ) ?? false,
       );
+  String fmtSalePrice(){
+    try{
+      return NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0).format(salePrice);
+    }catch(e){}
+    return '$salePrice';
+  }
 
   Map<String, dynamic> toMap() => {
         'id': id,

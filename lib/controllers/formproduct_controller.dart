@@ -15,12 +15,18 @@ class FormProductController extends GetxController{
     TextEditingController KategoriController = TextEditingController();
     TextEditingController OutletController = TextEditingController();
     late ProductModel model;
+    late LaundryOutletModel lo;
     RxBool isLoading = false.obs;
 
 
-    void initModel(ProductModel? m){
+    void initModel(ProductModel? m, LaundryOutletModel lo){
         model = m ?? ProductModel();
+        this.lo = lo;
         KategoriController = TextEditingController(text: m?.category ?? '');
+
+        model.laundryOutletId = lo.id;
+        model.outletLaundry = lo.name;
+        OutletController.text = model.outletLaundry ?? '';
         
         isLoading.value = true;
          HTTP.get('${URLAddress.products}/${m?.idx}').then((value) {

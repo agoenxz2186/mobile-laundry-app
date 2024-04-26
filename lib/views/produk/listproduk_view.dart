@@ -1,6 +1,6 @@
  
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; 
 import 'package:flutter_material_design_icons/flutter_material_design_icons.dart';
 import 'package:get/get.dart'; 
 import 'package:laundry_owner/components/widgets.dart'; 
@@ -17,6 +17,7 @@ class ListProdukView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ListProdukController());
+    controller.init(lo);
     controller.clearItemSelected();
 
     return  Scaffold(
@@ -25,6 +26,7 @@ class ListProdukView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('Produk  / Jasa'),
+              Text('${lo?.name}', style: const TextStyle(fontSize: 13),),
               Obx( () {
                   return controller.modeSelected.value ? 
                        DefaultTextStyle(
@@ -101,29 +103,38 @@ class _ItemListProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-           selected: controller.itemSelected[v.idx] == 1,
-           selectedColor: Colors.green,
-           onLongPress: () {
-              controller.modeSelected.value = true;
-              controller.addItemSelected(v.idx);
-          },
-          onTap: (){
-              controller.onItemTap(v);
-          },
-          
-          title: Text('${v.name}', style: const TextStyle(fontSize: 18,
-            fontWeight: FontWeight.bold
-          ),),
-          trailing: Text('${v.rating ?? 0}'),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(v.category ?? "[Kategori belum di set]"),
-              Text('${v.salePrice ?? 0} '),
-              LabelInfo(label: Text('Layanan ${v.duration} ${v.durationUnit}'),)
-            ],
-          ),
-        ); 
+    return Column(
+      children: [
+        ListTile(
+              dense: true,
+               selected: controller.itemSelected[v.idx] == 1,
+               selectedColor: Colors.green,
+               onLongPress: () {
+                  controller.modeSelected.value = true;
+                  controller.addItemSelected(v.idx);
+              },
+              onTap: (){
+                  controller.onItemTap(v);
+              },
+              
+              title: Text('${v.name}', style: const TextStyle(fontSize: 18,
+                fontWeight: FontWeight.bold
+              ),),
+              trailing: Text('${v.rating ?? 0}'),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(v.category ?? "[Kategori belum di set]"),
+                  Text(v.fmtSalePrice(), textAlign: TextAlign.right,),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: LabelInfo(label: Text('Layanan ${v.duration} ${v.durationUnit}'),)
+                  ), 
+                ],
+              ),
+            ),
+            Divider()
+      ],
+    ); 
   }
 }

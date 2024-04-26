@@ -13,6 +13,7 @@ import 'package:laundry_owner/utils/url_address.dart';
 
 class FormPenjualanController extends GetxController{
    OrderModel model = OrderModel();
+   late LaundryOutletModel modelLo;
    RxList<DetailOrderModel> detailData = <DetailOrderModel>[].obs;
    
    RxBool loading = false.obs;
@@ -25,6 +26,8 @@ class FormPenjualanController extends GetxController{
       orderAt: DateFormat('y-MM-dd').format(DateTime.now())
      );
 
+     modelLo = LaundryOutletModel();
+
      if(m != null){
         loading.value = true;
         final r = await HTTP.get('${URLAddress.orders}/show/${m.idx}');
@@ -32,12 +35,15 @@ class FormPenjualanController extends GetxController{
             final mm = OrderModel.fromMap(r['json']['data']);
             model = mm;
             outletController.text = mm.laundryOutlet ?? '';
+            modelLo.id = model.laundryOutletId;
+            modelLo.name = model.laundryOutlet;
         } 
         loading.value = false;
      }
    }
 
    void setOutletLaundry(LaundryOutletModel m){ 
+      modelLo = m;
       model.laundryOutlet = m.name;
       model.laundryOutletId = m.id;
       outletController.text = m.name ?? '';

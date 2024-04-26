@@ -98,10 +98,11 @@ class FormPenjualanView extends StatelessWidget {
           ),
 
         ElevatedButton.icon(onPressed: (){
+            final controller = Get.find<FormPenjualanController>();
             showDialog(context: Get.context!, builder: (context) {
-              return const Dialog(
-                insetPadding: EdgeInsets.all(10),
-                child: DetailOrderView() 
+              return   Dialog(
+                insetPadding: const EdgeInsets.all(10),
+                child: DetailOrderView(controller.modelLo) 
               );
             });
         }, icon: const Icon(MdiIcons.cart), label: const Text('Tambah Item Jasa'))

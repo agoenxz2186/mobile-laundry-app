@@ -2,6 +2,7 @@
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:laundry_owner/models/laundry_outlet_model.dart';
 import 'package:laundry_owner/models/product_model.dart';
 import 'package:laundry_owner/utils/global_variable.dart';
 import 'package:laundry_owner/utils/http.dart';
@@ -12,6 +13,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class ListProdukController extends GetxController{
   
   RxList<ProductModel> data = <ProductModel>[].obs;
+  late LaundryOutletModel lo;
   
   var isLoading = false.obs;
   var modeSelected = false.obs;
@@ -21,9 +23,13 @@ class ListProdukController extends GetxController{
   int _page = 1;
   RefreshController refreshController = RefreshController(initialRefresh: true);
 
+  init(LaundryOutletModel? lo){
+      this.lo = lo ?? LaundryOutletModel();
+  }
+
   Future _load([page = 1]) async {
     _page = page;
-    final l = await HTTP.get('${URLAddress.products}?page=$_page');
+    final l = await HTTP.get('${URLAddress.products}/${lo.id}/?page=$_page');
     logD(l);
 
     if (l['code'] == 200) {
@@ -58,7 +64,7 @@ class ListProdukController extends GetxController{
   }
 
   Future newForm()async{
-      Get.to(()=>const FormProductView())?.then((value) {
+      Get.to(()=> FormProductView(lo: lo,))?.then((value) {
         if(value == true){
           loadrefresh();
         }
@@ -79,7 +85,7 @@ class ListProdukController extends GetxController{
     if( modeSelected.value == true){
         addItemSelected(v.idx);
     }else{
-        Get.to(()=>FormProductView(model: v),
+        Get.to(()=>FormProductView(model: v, lo: lo,),
           transition: Transition.zoom
         )?.then((value) {
           logD('hasil simpan $value');
